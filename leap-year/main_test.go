@@ -16,9 +16,22 @@ func TestReturnsTrueForTypicalLeapYear(t *testing.T) {
 	}
 }
 
-func TestReturnsFalseForCommonYears(t *testing.T) {
+func TestReturnsFalseForTypicalCommonYears(t *testing.T) {
 	expected := false
 	tests := []int{1903, 2001}
+
+	for _, tt := range tests {
+		t.Run(fmt.Sprint(tt), func(t *testing.T) {
+			if got := isLeapYear(tt); got != expected {
+				t.Errorf(errorFormat+" for year %d", expected, got, tt)
+			}
+		})
+	}
+}
+
+func TestReturnsFalseForAtypicalCommonYears(t *testing.T) {
+	expected := false
+	tests := []int{1900, 2300}
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
