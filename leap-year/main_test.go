@@ -9,7 +9,7 @@ const errorFormat = "Expected %t but got %t"
 
 func TestReturnsTrueForTypicalLeapYear(t *testing.T) {
 	expected := true
-	result := isLeapYear(1996)
+	result, _ := isLeapYear(1996)
 
 	if result != expected {
 		t.Errorf(errorFormat, expected, result)
@@ -22,7 +22,7 @@ func TestReturnsFalseForTypicalCommonYears(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			if got := isLeapYear(tt); got != expected {
+			if got, _ := isLeapYear(tt); got != expected {
 				t.Errorf(errorFormat+" for year %d", expected, got, tt)
 			}
 		})
@@ -35,7 +35,7 @@ func TestReturnsFalseForAtypicalCommonYears(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			if got := isLeapYear(tt); got != expected {
+			if got, _ := isLeapYear(tt); got != expected {
 				t.Errorf(errorFormat+" for year %d", expected, got, tt)
 			}
 		})
@@ -48,9 +48,17 @@ func TestReturnsTrueForAtypicalLeapYears(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			if got := isLeapYear(tt); got != expected {
+			if got, _ := isLeapYear(tt); got != expected {
 				t.Errorf(errorFormat+" for year %d", expected, got, tt)
 			}
 		})
+	}
+}
+
+func TestReturnsErrorWhenInputIsInvalid(t *testing.T) {
+	_, error := isLeapYear(-1000)
+
+	if error == nil {
+		t.Errorf("Expected error to be returned.")
 	}
 }
