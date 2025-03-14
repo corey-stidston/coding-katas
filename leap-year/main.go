@@ -11,10 +11,15 @@ year and 2000 is an atypical leap year.
 
 package main
 
+import "errors"
+
 func isLeapYear(year int) (bool, error) {
+	if year < 1 {
+		return false, errors.New("years less than 1 are unsupported")
+	}
 	return year%4 == 0 && (year%100 != 0 || year%400 == 0), nil
 }
 
 func main() {
-	// TODO: Implement the function
+
 }
