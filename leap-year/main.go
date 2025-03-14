@@ -10,7 +10,7 @@ year and 2000 is an atypical leap year.
 package main
 
 func isLeapYear(year int) bool {
-	return false
+	return year%4 == 0
 }
 
 func main() {
