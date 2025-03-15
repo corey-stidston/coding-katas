@@ -40,7 +40,16 @@ func fizzBuzz() []string {
 	var output []string
 
 	for i := 1; i <= 100; i++ {
-		output = append(output, strconv.Itoa(i))
+		var valueToAdd string
+		multipleOf3 := i%3 == 0
+
+		if multipleOf3 {
+			valueToAdd = "Fizz"
+		} else {
+			valueToAdd = strconv.Itoa(i)
+		}
+
+		output = append(output, valueToAdd)
 	}
 
 	return output
