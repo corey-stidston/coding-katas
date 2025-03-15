@@ -30,17 +30,23 @@ Buzz
 
 package main
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
-func fizzBuzz() string {
-	var output = "1"
+func fizzBuzz() []string {
+	var output []string
 
-	for i := 2; i <= 10; i++ {
-		output += "\n"
-		output += strconv.Itoa(i)
+	for i := 1; i <= 100; i++ {
+		output = append(output, strconv.Itoa(i))
 	}
+
 	return output
 }
 
 func main() {
+	result := fizzBuzz()
+	fmt.Print(strings.Join(result, "\n"))
 }
