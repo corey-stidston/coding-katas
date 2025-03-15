@@ -26,3 +26,17 @@ func TestShouldPrintFizzForMultiplesOf3(t *testing.T) {
 		}
 	}
 }
+
+func TestShouldPrintBuzzForMultiplesOf5(t *testing.T) {
+	result := fizzBuzz()
+
+	for i := 0; i < 100; i++ {
+		if (i+1)%5 != 0 {
+			continue
+		}
+
+		if result[i] != "Buzz" {
+			t.Errorf("Expected Buzz but got %s", result[i])
+		}
+	}
+}

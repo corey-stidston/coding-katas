@@ -42,9 +42,12 @@ func fizzBuzz() []string {
 	for i := 1; i <= 100; i++ {
 		var valueToAdd string
 		multipleOf3 := i%3 == 0
+		multipleOf5 := i%5 == 0
 
 		if multipleOf3 {
 			valueToAdd = "Fizz"
+		} else if multipleOf5 {
+			valueToAdd = "Buzz"
 		} else {
 			valueToAdd = strconv.Itoa(i)
 		}
