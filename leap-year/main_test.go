@@ -7,12 +7,23 @@ import (
 
 const errorFormat = "Expected %t but got %t"
 
-func TestReturnsTrueForTypicalLeapYear(t *testing.T) {
-	expected := true
-	result, _ := isLeapYear(1996)
+func TestLeapYears(t *testing.T) {
+	tests := []struct {
+		testName string
+		year     int
+		expected bool
+	}{
+		{
+			"Typical leap year", 1996, true,
+		},
+	}
 
-	if result != expected {
-		t.Errorf(errorFormat, expected, result)
+	for _, tt := range tests {
+		t.Run(fmt.Sprint(tt), func(t *testing.T) {
+			if got, _ := isLeapYear(tt.year); got != tt.expected {
+				t.Errorf(tt.testName+": "+errorFormat+" for year %d", tt.expected, got, tt.year)
+			}
+		})
 	}
 }
 
