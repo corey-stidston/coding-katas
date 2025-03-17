@@ -7,7 +7,7 @@ import (
 
 const errorFormat = "Expected %t but got %t"
 
-func TestLeapYears(t *testing.T) {
+func TestReturnsCorrectValueWhenInputIsValid(t *testing.T) {
 	tests := []struct {
 		testName string
 		year     int
@@ -16,51 +16,30 @@ func TestLeapYears(t *testing.T) {
 		{
 			"Typical leap year", 1996, true,
 		},
+		{
+			"Typical common year", 1903, false,
+		},
+		{
+			"Typical common year", 2001, false,
+		},
+		{
+			"Atypical common year", 1900, false,
+		},
+		{
+			"Atypical common year", 2300, false,
+		},
+		{
+			"Atypical leap year", 1600, true,
+		},
+		{
+			"Atypical leap year", 2000, true,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
 			if got, _ := isLeapYear(tt.year); got != tt.expected {
 				t.Errorf(tt.testName+": "+errorFormat+" for year %d", tt.expected, got, tt.year)
-			}
-		})
-	}
-}
-
-func TestReturnsFalseForTypicalCommonYears(t *testing.T) {
-	expected := false
-	tests := []int{1903, 2001}
-
-	for _, tt := range tests {
-		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			if got, _ := isLeapYear(tt); got != expected {
-				t.Errorf(errorFormat+" for year %d", expected, got, tt)
-			}
-		})
-	}
-}
-
-func TestReturnsFalseForAtypicalCommonYears(t *testing.T) {
-	expected := false
-	tests := []int{1900, 2300}
-
-	for _, tt := range tests {
-		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			if got, _ := isLeapYear(tt); got != expected {
-				t.Errorf(errorFormat+" for year %d", expected, got, tt)
-			}
-		})
-	}
-}
-
-func TestReturnsTrueForAtypicalLeapYears(t *testing.T) {
-	expected := true
-	tests := []int{1600, 2000}
-
-	for _, tt := range tests {
-		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			if got, _ := isLeapYear(tt); got != expected {
-				t.Errorf(errorFormat+" for year %d", expected, got, tt)
 			}
 		})
 	}
