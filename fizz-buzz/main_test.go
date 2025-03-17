@@ -13,16 +13,16 @@ func TestShouldPrint100Items(t *testing.T) {
 	}
 }
 
-func TestShouldPrintFizzForMultiplesOf3(t *testing.T) {
+func TestShouldPrintFizzForMultiplesOf3ButNotMultiplesOf5(t *testing.T) {
 	result := fizzBuzz()
 
 	for i := 0; i < 100; i++ {
-		if (i+1)%3 != 0 {
+		if (i+1)%3 != 0 || (i+1)%5 == 0 {
 			continue
 		}
 
 		if result[i] != "Fizz" {
-			t.Errorf("Expected Fizz but got %s", result[i])
+			t.Errorf("For count %d expected Fizz but got %s", i, result[i])
 		}
 	}
 }
@@ -31,12 +31,26 @@ func TestShouldPrintBuzzForMultiplesOf5(t *testing.T) {
 	result := fizzBuzz()
 
 	for i := 0; i < 100; i++ {
-		if (i+1)%5 != 0 {
+		if (i+1)%5 != 0 || (i+1)%3 == 0 {
 			continue
 		}
 
 		if result[i] != "Buzz" {
-			t.Errorf("Expected Buzz but got %s", result[i])
+			t.Errorf("For count %d expected Buzz but got %s", i, result[i])
+		}
+	}
+}
+
+func TestShouldPrintFizzBuzzForMultiplesOf3And5(t *testing.T) {
+	result := fizzBuzz()
+
+	for i := 0; i < 100; i++ {
+		if (i+1)%3 != 0 || (i+1)%5 != 0 {
+			continue
+		}
+
+		if result[i] != "FizzBuzz" {
+			t.Errorf("For count %d expected FizzBuzz but got %s", i+1, result[i])
 		}
 	}
 }

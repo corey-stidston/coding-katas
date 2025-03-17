@@ -44,7 +44,9 @@ func fizzBuzz() []string {
 		multipleOf3 := i%3 == 0
 		multipleOf5 := i%5 == 0
 
-		if multipleOf3 {
+		if multipleOf3 && multipleOf5 {
+			valueToAdd = "FizzBuzz"
+		} else if multipleOf3 {
 			valueToAdd = "Fizz"
 		} else if multipleOf5 {
 			valueToAdd = "Buzz"
