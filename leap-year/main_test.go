@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-const errorFormat = "Expected %t but got %t"
-
 func TestReturnsCorrectValueWhenInputIsValid(t *testing.T) {
 	tests := []struct {
 		testName string
@@ -39,7 +37,7 @@ func TestReturnsCorrectValueWhenInputIsValid(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
 			if got, _ := isLeapYear(tt.year); got != tt.expected {
-				t.Errorf(tt.testName+": "+errorFormat+" for year %d", tt.expected, got, tt.year)
+				t.Errorf(tt.testName+": Expected %t but got %t for year %d", tt.expected, got, tt.year)
 			}
 		})
 	}
