@@ -27,5 +27,9 @@ func (sb *ShoppingBasket) AddItem(item string) {
 	sb.Basket = append(sb.Basket, item)
 }
 
+func (sb ShoppingBasket) GetItemQuantity(item string) int {
+	return 1
+}
+
 func main() {
 }
