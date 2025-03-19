@@ -21,17 +21,10 @@ package main
 
 type ShoppingBasket struct {
 	Basket []string
-
-	AddItem func(string)
 }
 
-func Build() ShoppingBasket {
-	shoppingBasket := ShoppingBasket {}
-
-	shoppingBasket.AddItem = func(item string) {
-		//
-	}
-	return shoppingBasket
+func (sb *ShoppingBasket) AddItem(item string) {
+	sb.Basket = append(sb.Basket, item)
 }
 
 func main() {
