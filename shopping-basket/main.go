@@ -4,7 +4,7 @@ Items in a shopping basket have a unit price and quantity. Write code that will 
 find out the quantity of a particular item in the basket
 calculate the total price of the whole basket, including any applicable discount
 
-Normally the total price is the sum of unit price * quantity for all the items. 
+Normally the total price is the sum of unit price * quantity for all the items.
 If you buy in bulk you get a discount:
 
 If total basket value > $100, apply a 5% discount
@@ -19,17 +19,23 @@ This basket qualifies for a 5% discount and the total price is $151.94
 
 package main
 
-type ShoppingBasket struct {
-	Basket []string
+type Item struct {
+	Name  string
+	Price float32
 }
 
-func (sb *ShoppingBasket) AddItem(item string) {
+type ShoppingBasket struct {
+	Basket []Item
+}
+
+func (sb *ShoppingBasket) AddItem(item Item) {
 	sb.Basket = append(sb.Basket, item)
 }
 
-func (sb ShoppingBasket) GetItemQuantity(item string) int {
+func (sb ShoppingBasket) GetItemQuantity(itemName string) int {
 	return 1
 }
 
 func main() {
+	//
 }
