@@ -15,14 +15,13 @@ func TestAddItemsToShoppingBasket(t *testing.T) {
 }
 
 func TestGetQuantity(t *testing.T) {
+	orange := Item {
+		Name: "orange",
+		Price: 1.50,
+	}
+
 	basket := ShoppingBasket{
-		Basket: []Item{{
-			Name:  "orange",
-			Price: 1.50,
-		}, {
-			Name:  "orange",
-			Price: 1.50,
-		}},
+		Basket: []Item{orange, orange},
 	}
 
 	expected := 2

@@ -33,7 +33,13 @@ func (sb *ShoppingBasket) AddItem(item Item) {
 }
 
 func (sb ShoppingBasket) GetItemQuantity(itemName string) int {
-	return 1
+	count := 0
+	for _, item := range sb.Basket {
+		if item.Name == itemName {
+			count++
+		}
+	}
+	return count
 }
 
 func main() {
