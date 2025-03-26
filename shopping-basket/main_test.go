@@ -37,12 +37,16 @@ func TestGetTotalPrice(t *testing.T) {
 		Name:  "orange",
 		Price: 1.50,
 	}
-
-	basket := ShoppingBasket{
-		Basket: []Item{orange, orange},
+	apple := Item{
+		Name: "apple",
+		Price: 2.25,
 	}
 
-	expected := float32(3)
+	basket := ShoppingBasket{
+		Basket: []Item{orange, apple},
+	}
+
+	expected := float32(3.75)
 	totalPrice := basket.GetTotalPrice()
 
 	if totalPrice != expected {
