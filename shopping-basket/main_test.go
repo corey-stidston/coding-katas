@@ -15,8 +15,8 @@ func TestAddItemsToShoppingBasket(t *testing.T) {
 }
 
 func TestGetQuantity(t *testing.T) {
-	orange := Item {
-		Name: "orange",
+	orange := Item{
+		Name:  "orange",
 		Price: 1.50,
 	}
 
@@ -28,6 +28,24 @@ func TestGetQuantity(t *testing.T) {
 	numberOfOranges := basket.GetItemQuantity("orange")
 
 	if numberOfOranges != expected {
-		t.Errorf("Expected an item quantity of %d oranges", expected)
+		t.Errorf("Expected an item quantity of %d oranges but got %d", expected, numberOfOranges)
+	}
+}
+
+func TestGetTotalPrice(t *testing.T) {
+	orange := Item{
+		Name:  "orange",
+		Price: 1.50,
+	}
+
+	basket := ShoppingBasket{
+		Basket: []Item{orange, orange},
+	}
+
+	expected := float32(3)
+	totalPrice := basket.GetTotalPrice()
+
+	if totalPrice != expected {
+		t.Errorf("Expected a total price of %f but got %f", expected, totalPrice)
 	}
 }

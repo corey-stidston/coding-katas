@@ -32,6 +32,10 @@ func (sb *ShoppingBasket) AddItem(item Item) {
 	sb.Basket = append(sb.Basket, item)
 }
 
+func (sb *ShoppingBasket) GetTotalPrice() float32 {
+	return 0
+}
+
 func (sb ShoppingBasket) GetItemQuantity(itemName string) int {
 	count := 0
 	for _, item := range sb.Basket {
