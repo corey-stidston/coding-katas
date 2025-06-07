@@ -37,7 +37,20 @@ func (sb *ShoppingBasket) GetTotalPrice() float32 {
 	for _, item := range sb.Basket {
 		totalPrice += item.Price
 	}
-	return totalPrice
+
+	discount := getDiscount(totalPrice)
+
+	return totalPrice - (totalPrice * discount)
+}
+
+func getDiscount(totalPrice float32) float32 {
+	if totalPrice < 100 {
+		return 0
+	} else if totalPrice > 100 && totalPrice < 200 {
+		return 0.05
+	} else { // totalPrice > 200
+		return 0.1
+	}
 }
 
 func (sb ShoppingBasket) GetItemQuantity(itemName string) int {
