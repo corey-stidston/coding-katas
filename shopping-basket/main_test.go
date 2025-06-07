@@ -55,6 +55,20 @@ func TestGetTotalPrice(t *testing.T) {
 			},
 			expectedPrice: 3.75,
 		},
+		{
+			testName: "Basket value greater than $100, less than $200",
+			items: []Item{
+				{
+					Name:  "truffles",
+					Price: 75.0,
+				},
+				{
+					Name: "olive oil",
+					Price: 50,
+				},
+			},
+			expectedPrice: 118.75,
+		},
 	}
 
 	for _, tt := range tests {
