@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestAddItemsToShoppingBasket(t *testing.T) {
 	basket := ShoppingBasket{}
@@ -33,23 +36,38 @@ func TestGetQuantity(t *testing.T) {
 }
 
 func TestGetTotalPrice(t *testing.T) {
-	orange := Item{
-		Name:  "orange",
-		Price: 1.50,
-	}
-	apple := Item{
-		Name: "apple",
-		Price: 2.25,
+	tests := []struct {
+		testName      string
+		items         []Item
+		expectedPrice float32
+	}{
+		{
+			testName: "Basket value less than $100",
+			items: []Item{
+				{
+					Name:  "orange",
+					Price: 1.50,
+				},
+				{
+					Name: "apple",
+					Price: 2.25,
+				},
+			},
+			expectedPrice: 3.75,
+		},
 	}
 
-	basket := ShoppingBasket{
-		Basket: []Item{orange, apple},
-	}
+	for _, tt := range tests {
+		t.Run(fmt.Sprint(tt), func(t *testing.T) {
+			basket := ShoppingBasket{
+				Basket: tt.items,
+			}
 
-	expected := float32(3.75)
-	totalPrice := basket.GetTotalPrice()
+			totalPrice := basket.GetTotalPrice()
 
-	if totalPrice != expected {
-		t.Errorf("Expected a total price of %f but got %f", expected, totalPrice)
+			if totalPrice != tt.expectedPrice {
+				t.Errorf("Expected a total price of %f but got %f", tt.expectedPrice, totalPrice)
+			}
+		})
 	}
 }

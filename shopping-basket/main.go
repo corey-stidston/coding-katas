@@ -1,8 +1,8 @@
 /*
 Items in a shopping basket have a unit price and quantity. Write code that will allow you to:
 
-find out the quantity of a particular item in the basket
-calculate the total price of the whole basket, including any applicable discount
+- find out the quantity of a particular item in the basket
+- calculate the total price of the whole basket, including any applicable discount
 
 Normally the total price is the sum of unit price * quantity for all the items.
 If you buy in bulk you get a discount:
