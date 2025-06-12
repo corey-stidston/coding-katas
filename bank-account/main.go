@@ -28,5 +28,19 @@ Don’t worry about matching the exact formatting of the bank statement, the imp
 
 package main
 
+import "fmt"
+
+func Deposit(amount int) {
+ //
+}
+
+func Withdraw(amount int) {
+ //
+}
+
+func PrintStatement() {
+	fmt.Print("Date       || Amount || Balance")
+}
+
 func main() {
 }
