@@ -17,7 +17,7 @@ In software development, katas help you:
 To run tests for all katas:
 
 ```bash
-./run-tests.sh
+./test.sh
 ```
 
 ## Creating a New Kata
@@ -30,8 +30,8 @@ To create a new kata project structure:
 
 This will create a new directory with the basic Go project structure including:
 - `go.mod`
-- `main.go`
-- `main_test.go`
+- `kata-name.go`
+- `kata-name_test.go`
 
 ## References
 

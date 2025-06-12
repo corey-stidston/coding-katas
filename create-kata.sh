@@ -19,7 +19,7 @@ go 1.21
 EOF
 
 # Create main.go file
-cat > "$KATA_DIR/main.go" << EOF
+cat > $KATA_DIR/$KATA_NAME".go" << EOF
 package main
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 EOF
 
 # Create main_test.go file
-cat > "$KATA_DIR/main_test.go" << EOF
+cat > $KATA_DIR/$KATA_NAME"_test.go" << EOF
 package main
 
 import "testing"
