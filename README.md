@@ -12,14 +12,6 @@ In software development, katas help you:
 - Experiment with different approaches to the same problem
 - Build muscle memory for good coding practices
 
-## Katas in this Project
-
-Currently implemented katas:
-
-1. **Hello World** - A simple starter kata that prints "Hello, World!"
-2. **Leap Year** - Determine if a given year is a leap year
-3. **FizzBuzz** - Print numbers 1 to 100, replacing multiples of 3 with "Fizz", multiples of 5 with "Buzz", and multiples of both with "FizzBuzz"
-
 ## Running Tests
 
 To run tests for all katas:
