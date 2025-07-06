@@ -9,57 +9,46 @@ func TestWinLose(t *testing.T) {
 	tests := []struct {
 		player1Points int
 		player2Points int
+		expectedScore string
 	}{
 		{
 			player1Points: 4,
 			player2Points: 0,
+			expectedScore: "Win - Lose",
 		},
 		{
 			player1Points: 4,
 			player2Points: 1,
+			expectedScore: "Win - Lose",
 		},
 		{
 			player1Points: 4,
 			player2Points: 2,
+			expectedScore: "Win - Lose",
 		},
-	}
-
-	for _, tt := range tests {
-		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			score1, score2 := score(tt.player1Points, tt.player2Points)
-
-			if score1 != "Win" || score2 != "Lose" {
-				t.Errorf("Expected %s - Win but got %s - Lose", score1, score2)
-			}
-		})
-	}
-}
-
-func TestLoseWin(t *testing.T) {
-	tests := []struct {
-		player1Points int
-		player2Points int
-	}{
 		{
 			player1Points: 0,
 			player2Points: 4,
+			expectedScore: "Lose - Win",
 		},
 		{
 			player1Points: 1,
 			player2Points: 4,
+			expectedScore: "Lose - Win",
 		},
 		{
 			player1Points: 2,
 			player2Points: 4,
+			expectedScore: "Lose - Win",
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			score1, score2 := score(tt.player1Points, tt.player2Points)
+			score := score(tt.player1Points, tt.player2Points)
 
-			if score1 != "Lose" || score2 != "Win" {
-				t.Errorf("Expected %s - Lose but got %s - Win", score1, score2)
+			if score != tt.expectedScore {
+				t.Errorf("Expected %s but got %s", tt.expectedScore, score)
 			}
 		})
 	}
