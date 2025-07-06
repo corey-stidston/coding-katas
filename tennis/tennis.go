@@ -28,6 +28,8 @@ func score(player1 int, player2 int) (Score) {
 		return WinLose
 	} else if(player2 >= 4 && player2 - player1 >= 2) {
 		return LoseWin
+	} else if(player1 == player2 && player1 >= 3 && player2 >= 3) {
+		return Deuce
 	}
 	return LoseWin
 }
