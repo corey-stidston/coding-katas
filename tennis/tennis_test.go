@@ -27,6 +27,11 @@ func TestScore(t *testing.T) {
 			expectedScore: WinLose,
 		},
 		{
+			player1Points: 6,
+			player2Points: 4,
+			expectedScore: WinLose,
+		},
+		{
 			player1Points: 0,
 			player2Points: 4,
 			expectedScore: LoseWin,
@@ -39,6 +44,11 @@ func TestScore(t *testing.T) {
 		{
 			player1Points: 2,
 			player2Points: 4,
+			expectedScore: LoseWin,
+		},
+		{
+			player1Points: 4,
+			player2Points: 6,
 			expectedScore: LoseWin,
 		},
 		{

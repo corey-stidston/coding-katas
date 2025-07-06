@@ -24,9 +24,9 @@ const (
 )
 
 func score(player1 int, player2 int) (Score) {
-	if (player1 == 4 && player2 <= 2) {
+	if (player1 >= 4 && player1 - player2 >= 2) {
 		return WinLose
-	} else if(player2 == 4 && player1 <=2) {
+	} else if(player2 >= 4 && player2 - player1 >= 2) {
 		return LoseWin
 	}
 	return LoseWin
