@@ -112,11 +112,19 @@ func TestScore(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			var tennisGame = TennisGame{
-				p1Points: tt.player1Points,
-				p2Points: tt.player2Points,
+			game := TennisGame()
+			highestScore := max(tt.player1Points, tt.player2Points)
+
+			for i := 0; i < highestScore; i++ {
+				if i < tt.player1Points {
+					game.WonPoint(1)
+				}
+				if i < tt.player2Points {
+					game.WonPoint(2)
+				}
 			}
-			score1, score2 := tennisGame.GetScore()
+
+			score1, score2 := game.GetScore()
 
 			if score1 != tt.player1ExpectedScore && score2 != tt.player2ExpectedScore {
 				t.Errorf("Expected %s - %s but got %s - %s", tt.player1ExpectedScore, score1, tt.player2ExpectedScore, score2)

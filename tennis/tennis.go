@@ -15,7 +15,7 @@ You need only report the score for the current game. Sets and Matches are out of
 
 package main
 
-type TennisGame struct {
+type tennisGame struct {
 	p1Points int
 	p2Points int
 }
@@ -35,7 +35,22 @@ const (
 
 var scoreMap = [4]Score{Love, Fifteen, Thirty, Forty}
 
-func (game *TennisGame) GetScore() (Score, Score) {
+func TennisGame() *tennisGame {
+	return &tennisGame{
+		p1Points: 0,
+		p2Points: 0,
+	}
+}
+
+func (game *tennisGame) WonPoint(playerNumber int) {
+	if (playerNumber == 1) {
+		game.p1Points += 1
+	} else {
+		game.p2Points += 1
+	}
+}
+
+func (game *tennisGame) GetScore() (Score, Score) {
 	var p1Score Score
 	var p2Score Score
 
