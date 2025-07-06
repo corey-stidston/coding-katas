@@ -9,37 +9,37 @@ func TestWinLose(t *testing.T) {
 	tests := []struct {
 		player1Points int
 		player2Points int
-		expectedScore string
+		expectedScore Score
 	}{
 		{
 			player1Points: 4,
 			player2Points: 0,
-			expectedScore: "Win - Lose",
+			expectedScore: WinLose,
 		},
 		{
 			player1Points: 4,
 			player2Points: 1,
-			expectedScore: "Win - Lose",
+			expectedScore: WinLose,
 		},
 		{
 			player1Points: 4,
 			player2Points: 2,
-			expectedScore: "Win - Lose",
+			expectedScore: WinLose,
 		},
 		{
 			player1Points: 0,
 			player2Points: 4,
-			expectedScore: "Lose - Win",
+			expectedScore: LoseWin,
 		},
 		{
 			player1Points: 1,
 			player2Points: 4,
-			expectedScore: "Lose - Win",
+			expectedScore: LoseWin,
 		},
 		{
 			player1Points: 2,
 			player2Points: 4,
-			expectedScore: "Lose - Win",
+			expectedScore: LoseWin,
 		},
 	}
 
@@ -48,7 +48,7 @@ func TestWinLose(t *testing.T) {
 			score := score(tt.player1Points, tt.player2Points)
 
 			if score != tt.expectedScore {
-				t.Errorf("Expected %s but got %s", tt.expectedScore, score)
+				t.Errorf("Expected %d but got %d", tt.expectedScore, score)
 			}
 		})
 	}

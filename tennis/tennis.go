@@ -15,14 +15,20 @@ You need only report the score for the current game. Sets and Matches are out of
 
 package main
 
+type Score int
 
-func score(player1 int, player2 int) (string) {
+const (
+	WinLose Score = iota
+	LoseWin
+)
+
+func score(player1 int, player2 int) (Score) {
 	if (player1 == 4 && player2 <= 2) {
-		return "Win - Lose"
+		return WinLose
 	} else if(player2 == 4 && player1 <=2) {
-		return "Lose - Win"
+		return LoseWin
 	}
-	return ""
+	return LoseWin
 }
 
 func main() {
