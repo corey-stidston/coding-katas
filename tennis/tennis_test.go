@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestWinLose(t *testing.T) {
+func TestScore(t *testing.T) {
 	tests := []struct {
 		player1Points int
 		player2Points int
@@ -40,6 +40,16 @@ func TestWinLose(t *testing.T) {
 			player1Points: 2,
 			player2Points: 4,
 			expectedScore: LoseWin,
+		},
+		{
+			player1Points: 3,
+			player2Points: 3,
+			expectedScore: Deuce,
+		},
+		{
+			player1Points: 4,
+			player2Points: 4,
+			expectedScore: Deuce,
 		},
 	}
 
