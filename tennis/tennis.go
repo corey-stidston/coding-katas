@@ -31,16 +31,33 @@ const (
 var scoreMap = [4]Score{Love, Fifteen, Thirty, Forty}
 
 func score(player1 int, player2 int) (Score, Score) {
-	if player1 >= 4 && player1-player2 >= 2 {
-		return Win, Lose
-	} else if player2 >= 4 && player2-player1 >= 2 {
-		return Lose, Win
-	} else if player1 == player2 && player1 >= 3 && player2 >= 3 {
-		return Deuce, Deuce
-	}
+	var player1Score Score
+	var player2Score Score
 
-	return scoreMap[player1], scoreMap[player2]
+	if player1 >= 4 && player1-player2 >= 2 {
+		player1Score = Win
+		player2Score = Lose
+	} else if player2 >= 4 && player2-player1 >= 2 {
+		player1Score = Lose
+		player2Score = Win
+	} else if player1 == player2 && player1 >= 3 && player2 >= 3 {
+		player1Score = Deuce
+		player2Score = Deuce
+	} else if player1 >= 3 && player2 >= 3 {
+		if player1 > player2 {
+			player1Score = Advantage
+			player2Score = scoreMap[player2]
+		} else {
+			player1Score = scoreMap[player1]
+			player2Score = Advantage
+		}
+	} else {
+		player1Score = scoreMap[player1]
+		player2Score = scoreMap[player2]
+	}
+	return player1Score, player2Score
 }
 
 func main() {
+	//
 }

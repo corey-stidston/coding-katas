@@ -92,9 +92,21 @@ func TestScore(t *testing.T) {
 		},
 		{
 			player1Points: 1,
+			player2Points: 2,
+			player1ExpectedScore: Fifteen,
+			player2ExpectedScore: Thirty,
+		},
+		{
+			player1Points: 1,
 			player2Points: 3,
 			player1ExpectedScore: Fifteen,
-			player2ExpectedScore: Forty,
+			player2ExpectedScore: Advantage,
+		},
+		{
+			player1Points: 3,
+			player2Points: 4,
+			player1ExpectedScore: Forty,
+			player2ExpectedScore: Advantage,
 		},
 	}
 
