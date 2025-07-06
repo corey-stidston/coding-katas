@@ -20,6 +20,7 @@ type Score int
 const (
 	WinLose Score = iota
 	LoseWin
+	Deuce
 )
 
 func score(player1 int, player2 int) (Score) {
