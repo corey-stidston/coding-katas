@@ -1,13 +1,66 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
-func TestGame(t *testing.T) {
-	expectedScore1 := "Lose"
-	expectedScore2 := "Win"
-	score1, score2 := score(0, 4)
+func TestWinLose(t *testing.T) {
+	tests := []struct {
+		player1Points int
+		player2Points int
+	}{
+		{
+			player1Points: 4,
+			player2Points: 0,
+		},
+		{
+			player1Points: 4,
+			player2Points: 1,
+		},
+		{
+			player1Points: 4,
+			player2Points: 2,
+		},
+	}
 
-	if score1 != expectedScore1 || score2 != expectedScore2 {
-		t.Errorf("Expected %s - %s but got %s - %s", expectedScore1, expectedScore2, score1, score2)
+	for _, tt := range tests {
+		t.Run(fmt.Sprint(tt), func(t *testing.T) {
+			score1, score2 := score(tt.player1Points, tt.player2Points)
+
+			if score1 != "Win" || score2 != "Lose" {
+				t.Errorf("Expected %s - Win but got %s - Lose", score1, score2)
+			}
+		})
+	}
+}
+
+func TestLoseWin(t *testing.T) {
+	tests := []struct {
+		player1Points int
+		player2Points int
+	}{
+		{
+			player1Points: 0,
+			player2Points: 4,
+		},
+		{
+			player1Points: 1,
+			player2Points: 4,
+		},
+		{
+			player1Points: 2,
+			player2Points: 4,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(fmt.Sprint(tt), func(t *testing.T) {
+			score1, score2 := score(tt.player1Points, tt.player2Points)
+
+			if score1 != "Lose" || score2 != "Win" {
+				t.Errorf("Expected %s - Lose but got %s - Win", score1, score2)
+			}
+		})
 	}
 }
