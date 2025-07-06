@@ -84,6 +84,18 @@ func TestScore(t *testing.T) {
 			player1ExpectedScore: Fifteen,
 			player2ExpectedScore: Love,
 		},
+		{
+			player1Points: 0,
+			player2Points: 3,
+			player1ExpectedScore: Love,
+			player2ExpectedScore: Forty,
+		},
+		{
+			player1Points: 1,
+			player2Points: 3,
+			player1ExpectedScore: Fifteen,
+			player2ExpectedScore: Forty,
+		},
 	}
 
 	for _, tt := range tests {
