@@ -12,12 +12,56 @@ A full game consists of one go for each category. Thus, for their last go in a g
 
 Your task is to score a GIVEN roll in a GIVEN category. You do NOT have to program the random dice rolling. 
 The game is NOT played by letting the computer choose the highest scoring category for a given roll.
+
+Yatzy categories -
+
+Chance: The player scores the sum of all dice, no matter what they read.
+
+Yatzy: If all dice have the same number, the player scores 50 points.
+
+Ones, Twos, Threes, Fours, Fives, Sixes: The player scores the sum of the dice that reads one, two, three, four, five or six, respectively.
+
+Pair: The player scores the sum of the two highest matching dice.
+
+Two pairs: If there are two pairs of dice with the same number, the player scores the sum of these dice.
+
+Three of a kind: If there are three dice with the same number, the player scores the sum of these dice.
+
+Four of a kind: If there are four dice with the same number, the player scores the sum of these dice.
+
+Small straight: dice (1,2,3,4,5) the player scores the sum of all dice (15)
+
+Large straight: dice (2,3,4,5,6) the player scores the sum of all dice (20)
+
+Full house: If the dice are two of a kind and three of a kind, the player scores the sum of all the dice.
 */
 
 package main
 
-func getHelloMessage() string {
-	return "Hello, World!"
+
+type category uint
+
+const (
+	unknown category = iota
+	chance
+	yatzy
+	ones
+	twos
+	threes
+	fours
+	fives
+	sixes
+	pair
+	three_of_a_kind
+	four_of_a_kind
+	small_straight
+	large_straight
+	two_pairs
+	full_house
+)
+
+func YatzyScore(dice []int, category category) int {
+	return 0
 }
 
 func main() {

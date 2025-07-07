@@ -2,12 +2,12 @@ package main
 
 import "testing"
 
-func TestGetHelloMessage(t *testing.T) {
-	expected := "Hello, World!"
-	result := getHelloMessage()
+func TestYatzy(t *testing.T) {
+	expected := 6
+	result := YatzyScore([]int{1,1,1,1,1,1}, yatzy)
 
 	if result != expected {
-		t.Errorf("Expected %s but got %s", expected, result)
+		t.Errorf("Expected %d but got %d", expected, result)
 	}
 }
 
