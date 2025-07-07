@@ -9,104 +9,97 @@ func TestScore(t *testing.T) {
 	tests := []struct {
 		player1Points int
 		player2Points int
-		player1ExpectedScore Score
-		player2ExpectedScore Score
+		expectedScore Score
 	}{
 		{
 			player1Points: 4,
 			player2Points: 0,
-			player1ExpectedScore: Win,
-			player2ExpectedScore: Lose,
+			expectedScore: Player1Wins,
 		},
 		{
 			player1Points: 4,
 			player2Points: 1,
-			player1ExpectedScore: Win,
-			player2ExpectedScore: Lose,
+			expectedScore: Player1Wins,
 		},
 		{
 			player1Points: 4,
 			player2Points: 2,
-			player1ExpectedScore: Win,
-			player2ExpectedScore: Lose,
+			expectedScore: Player1Wins,
 		},
 		{
 			player1Points: 6,
 			player2Points: 4,
-			player1ExpectedScore: Win,
-			player2ExpectedScore: Lose,
+			expectedScore: Player1Wins,
 		},
 		{
 			player1Points: 0,
 			player2Points: 4,
-			player1ExpectedScore: Lose,
-			player2ExpectedScore: Win,
+			expectedScore: Player2Wins,
 		},
 		{
 			player1Points: 1,
 			player2Points: 4,
-			player1ExpectedScore: Lose,
-			player2ExpectedScore: Win,
+			expectedScore: Player2Wins,
 		},
 		{
 			player1Points: 2,
 			player2Points: 4,
-			player1ExpectedScore: Lose,
-			player2ExpectedScore: Win,
+			expectedScore: Player2Wins,
 		},
 		{
 			player1Points: 4,
 			player2Points: 6,
-			player1ExpectedScore: Lose,
-			player2ExpectedScore: Win,
+			expectedScore: Player2Wins,
 		},
 		{
 			player1Points: 3,
 			player2Points: 3,
-			player1ExpectedScore: Deuce,
-			player2ExpectedScore: Deuce,
+			expectedScore: Deuce,
 		},
 		{
 			player1Points: 4,
 			player2Points: 4,
-			player1ExpectedScore: Deuce,
-			player2ExpectedScore: Deuce,
+			expectedScore: Deuce,
 		},
 		{
 			player1Points: 0,
 			player2Points: 1,
-			player1ExpectedScore: Love,
-			player2ExpectedScore: Fifteen,
+			expectedScore: LoveFifteen,
 		},
 		{
 			player1Points: 1,
 			player2Points: 0,
-			player1ExpectedScore: Fifteen,
-			player2ExpectedScore: Love,
+			expectedScore: FifteenLove,
 		},
 		{
 			player1Points: 0,
 			player2Points: 3,
-			player1ExpectedScore: Love,
-			player2ExpectedScore: Forty,
+			expectedScore: LoveForty,
 		},
 		{
 			player1Points: 1,
 			player2Points: 2,
-			player1ExpectedScore: Fifteen,
-			player2ExpectedScore: Thirty,
+			expectedScore: FifteenThirty,
 		},
 		{
 			player1Points: 1,
 			player2Points: 3,
-			player1ExpectedScore: Fifteen,
-			player2ExpectedScore: Forty,
+			expectedScore: FifteenForty,
 		},
 		{
 			player1Points: 3,
 			player2Points: 4,
-			player1ExpectedScore: Forty,
-			player2ExpectedScore: Advantage,
+			expectedScore: Player2Advantage,
+		},
+		{
+			player1Points: 10,
+			player2Points: 11,
+			expectedScore: Player2Advantage,
+		},
+		{
+			player1Points: 117,
+			player2Points: 116,
+			expectedScore: Player1Advantage,
 		},
 	}
 
@@ -124,10 +117,10 @@ func TestScore(t *testing.T) {
 				}
 			}
 
-			score1, score2 := game.GetScore()
+			score := game.GetScore()
 
-			if score1 != tt.player1ExpectedScore || score2 != tt.player2ExpectedScore {
-				t.Errorf("Expected %s - %s but got %s - %s", tt.player1ExpectedScore, score1, tt.player2ExpectedScore, score2)
+			if score != tt.expectedScore {
+				t.Errorf("Expected %s but got %s", tt.expectedScore, score)
 			}
 		})
 	}

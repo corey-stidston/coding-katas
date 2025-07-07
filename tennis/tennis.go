@@ -23,17 +23,39 @@ type tennisGame struct {
 type Score string
 
 const (
-	Win       Score = "Win"
-	Lose      Score = "Lose"
-	Deuce     Score = "Deuce"
-	Love      Score = "Love"
-	Fifteen   Score = "Fifteen"
-	Thirty    Score = "Thirty"
-	Forty     Score = "Forty"
-	Advantage Score = "Advantage"
+	Player1Wins      Score = "Player 1 Wins"
+	Player2Wins      Score = "Player 2 Wins"
+	Player1Advantage Score = "Player 1 Advantage"
+	Player2Advantage Score = "Player 2 Advantage"
+
+	LoveFifteen   Score = "Love - Fifteen"
+	LoveThirty    Score = "Love - Thirty"
+	LoveForty     Score = "Love - Forty"
+	FifteenLove   Score = "Fifteen - Love"
+	ThirtyLove    Score = "Thirty - Love"
+	FortyLove     Score = "Forty - Love"
+	FifteenThirty Score = "Fifteen - Thirty"
+	ThirtyFifteen Score = "Thirty - Fifteen"
+	ThirtyForty   Score = "Thirty - Forty"
+	FortyThirty   Score = "Forty - Thirty"
+	FifteenForty  Score = "Fifteen - Forty"
+	FortyFifteen  Score = "Forty - Fifteen"
+
+	LoveAll    Score = "Love All"
+	FifteenAll Score = "Fifteen All"
+	ThirtyAll  Score = "Thirty All"
+	Deuce      Score = "Deuce"
+	Fifteen    Score = "Fifteen"
+	Thirty     Score = "Thirty"
+	Forty      Score = "Forty"
 )
 
-var scoreMap = [4]Score{Love, Fifteen, Thirty, Forty}
+var scoreMap = [4][4]Score{
+	{LoveAll, LoveFifteen, LoveThirty, LoveForty},
+	{FifteenLove, FifteenAll, FifteenThirty, FifteenForty},
+	{ThirtyLove, ThirtyFifteen, ThirtyAll, ThirtyForty},
+	{FortyLove, FortyFifteen, FortyThirty, Deuce},
+}
 
 func TennisGame() *tennisGame {
 	return &tennisGame{
@@ -43,39 +65,32 @@ func TennisGame() *tennisGame {
 }
 
 func (game *tennisGame) WonPoint(playerNumber int) {
-	if (playerNumber == 1) {
+	if playerNumber == 1 {
 		game.p1Points += 1
 	} else {
 		game.p2Points += 1
 	}
 }
 
-func (game *tennisGame) GetScore() (Score, Score) {
-	var p1Score Score
-	var p2Score Score
+func (game *tennisGame) GetScore() Score {
+	var result Score
 
 	if game.p1Points >= 4 && game.p1Points-game.p2Points >= 2 {
-		p1Score = Win
-		p2Score = Lose
+		result = Player1Wins
 	} else if game.p2Points >= 4 && game.p2Points-game.p1Points >= 2 {
-		p1Score = Lose
-		p2Score = Win
+		result = Player2Wins
 	} else if game.p1Points == game.p2Points && game.p1Points >= 3 && game.p2Points >= 3 {
-		p1Score = Deuce
-		p2Score = Deuce
+		result = Deuce
 	} else if game.p1Points >= 3 && game.p2Points >= 3 {
 		if game.p1Points > game.p2Points {
-			p1Score = Advantage
-			p2Score = scoreMap[game.p2Points]
+			result = Player1Advantage
 		} else {
-			p1Score = scoreMap[game.p1Points]
-			p2Score = Advantage
+			result = Player2Advantage
 		}
 	} else {
-		p1Score = scoreMap[game.p1Points]
-		p2Score = scoreMap[game.p2Points]
+		result = scoreMap[game.p1Points][game.p2Points]
 	}
-	return p1Score, p2Score
+	return result
 }
 
 func main() {
