@@ -1,16 +1,16 @@
 /*
-The game of Yatzy is a simple dice game. Each player rolls five six-sided dice. 
+The game of Yatzy is a simple dice game. Each player rolls five six-sided dice.
 They can re-roll some or all of the dice up to three times (including the original roll).
 
-The player then places the roll in a category, such as ones, twos, fives, pair, two pairs etc (see the rules below). 
-If the roll is compatible with the category, the player gets a score for the roll according to the rules. 
+The player then places the roll in a category, such as ones, twos, fives, pair, two pairs etc (see the rules below).
+If the roll is compatible with the category, the player gets a score for the roll according to the rules.
 If the roll is not compatible with the category, the player scores zero for the roll.
 
-For example, suppose a player scores 5,6,5,5,2 in the fives category they would score 15 (three fives). 
-The score for that go is then added to their total and the category cannot be used again in the remaining goes for that game. 
+For example, suppose a player scores 5,6,5,5,2 in the fives category they would score 15 (three fives).
+The score for that go is then added to their total and the category cannot be used again in the remaining goes for that game.
 A full game consists of one go for each category. Thus, for their last go in a game, a player must choose their only remaining category.
 
-Your task is to score a GIVEN roll in a GIVEN category. You do NOT have to program the random dice rolling. 
+Your task is to score a GIVEN roll in a GIVEN category. You do NOT have to program the random dice rolling.
 The game is NOT played by letting the computer choose the highest scoring category for a given roll.
 
 Yatzy categories -
@@ -38,7 +38,6 @@ Full house: If the dice are two of a kind and three of a kind, the player scores
 
 package main
 
-
 type category uint
 
 const (
@@ -60,8 +59,25 @@ const (
 	full_house
 )
 
-func YatzyScore(dice []int, category category) int {
-	return 0
+func isYatzy(dice [6]int) int {
+	var firstDie = dice[0]
+	for i := 1; i < len(dice); i++ {
+		if dice[i] != firstDie {
+			return 0
+		}
+	}
+	return firstDie * 6
+}
+
+func YatzyScore(dice [6]int, category category) int {
+	var result int
+
+	switch category {
+	case yatzy:
+		result = isYatzy(dice)
+	}
+
+	return result
 }
 
 func main() {
