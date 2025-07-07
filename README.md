@@ -20,6 +20,13 @@ To run tests for all katas:
 ./test.sh
 ```
 
+
+To run tests for a specific kata:
+
+```bash
+./test.sh tennis
+```
+
 ## Creating a New Kata
 
 To create a new kata project structure:
