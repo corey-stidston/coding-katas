@@ -100,7 +100,7 @@ func TestScore(t *testing.T) {
 			player1Points: 1,
 			player2Points: 3,
 			player1ExpectedScore: Fifteen,
-			player2ExpectedScore: Advantage,
+			player2ExpectedScore: Forty,
 		},
 		{
 			player1Points: 3,
@@ -126,7 +126,7 @@ func TestScore(t *testing.T) {
 
 			score1, score2 := game.GetScore()
 
-			if score1 != tt.player1ExpectedScore && score2 != tt.player2ExpectedScore {
+			if score1 != tt.player1ExpectedScore || score2 != tt.player2ExpectedScore {
 				t.Errorf("Expected %s - %s but got %s - %s", tt.player1ExpectedScore, score1, tt.player2ExpectedScore, score2)
 			}
 		})
