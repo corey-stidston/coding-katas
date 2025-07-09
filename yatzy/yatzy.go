@@ -59,7 +59,7 @@ const (
 	full_house
 )
 
-func isYatzy(dice [6]int) int {
+func calculateYatzy(dice [6]int) int {
 	var firstDie = dice[0]
 	for i := 1; i < len(dice); i++ {
 		if dice[i] != firstDie {
@@ -69,12 +69,22 @@ func isYatzy(dice [6]int) int {
 	return firstDie * 6
 }
 
+func calculateChance(dice [6]int) int {
+	var sum int
+	for _, die := range dice {
+		sum += die
+	}
+	return sum
+}
+
 func YatzyScore(dice [6]int, category category) int {
 	var result int
 
 	switch category {
 	case yatzy:
-		result = isYatzy(dice)
+		result = calculateYatzy(dice)
+	case chance:
+		result = calculateChance(dice)
 	}
 
 	return result
