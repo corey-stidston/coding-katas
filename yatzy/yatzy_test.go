@@ -1,13 +1,31 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestYatzy(t *testing.T) {
-	expected := 6
-	result := YatzyScore([6]int{1,1,1,1,1,1}, yatzy)
+	tests := []struct {
+		dice [6]int
+		category category
+		expectedScore int
+	}{
+		{
+			dice: [6]int{1,1,1,1,1,1},
+			category: yatzy,
+			expectedScore: 6,
+		},
+	}
 
-	if result != expected {
-		t.Errorf("Expected %d but got %d", expected, result)
+	for _, tt := range tests {
+		t.Run(fmt.Sprint(tt), func(t *testing.T) {
+			result := YatzyScore(tt.dice, tt.category)
+
+			if result != tt.expectedScore {
+				t.Errorf("Expected %d but got %d", tt.expectedScore, result)
+			}
+		})
 	}
 }
 
