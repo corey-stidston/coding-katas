@@ -25,7 +25,9 @@ func TestYatzy(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprint(tt), func(t *testing.T) {
-			result := YatzyScore(tt.dice, tt.category)
+			game := YatzyGame()
+			game.Roll(tt.dice)
+			result := game.GetScore(tt.category)
 
 			if result != tt.expectedScore {
 				t.Errorf("Expected %d but got %d", tt.expectedScore, result)

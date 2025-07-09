@@ -59,32 +59,44 @@ const (
 	full_house
 )
 
-func calculateYatzy(dice [6]int) int {
-	var firstDie = dice[0]
-	for i := 1; i < len(dice); i++ {
-		if dice[i] != firstDie {
+type yatzyGame struct {
+	dice [6]int
+}
+
+func YatzyGame() *yatzyGame {
+	return &yatzyGame{}
+}
+
+func (game *yatzyGame) Roll(dice [6]int) {
+	game.dice = dice
+}
+
+func (game *yatzyGame) calculateYatzy() int {
+	var firstDie = game.dice[0]
+	for i := 1; i < len(game.dice); i++ {
+		if game.dice[i] != firstDie {
 			return 0
 		}
 	}
 	return firstDie * 6
 }
 
-func calculateChance(dice [6]int) int {
+func (game *yatzyGame) calculateChance() int {
 	var sum int
-	for _, die := range dice {
+	for _, die := range game.dice {
 		sum += die
 	}
 	return sum
 }
 
-func YatzyScore(dice [6]int, category category) int {
+func (game *yatzyGame) GetScore(category category) int {
 	var result int
 
 	switch category {
 	case yatzy:
-		result = calculateYatzy(dice)
+		result = game.calculateYatzy()
 	case chance:
-		result = calculateChance(dice)
+		result = game.calculateChance()
 	}
 
 	return result
