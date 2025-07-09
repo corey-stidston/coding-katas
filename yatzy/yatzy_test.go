@@ -16,6 +16,11 @@ func TestYatzy(t *testing.T) {
 			category: yatzy,
 			expectedScore: 6,
 		},
+		{
+			dice: [6]int{1,2,3,4,5,6},
+			category: chance,
+			expectedScore: 21,
+		},
 	}
 
 	for _, tt := range tests {
