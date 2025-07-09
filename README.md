@@ -12,6 +12,8 @@ In software development, katas help you:
 - Experiment with different approaches to the same problem
 - Build muscle memory for good coding practices
 
+<strong>Credit to [Samman Coaching Katas](https://sammancoaching.org/kata_descriptions/index.html) for the kata descriptions.</strong>
+
 ## Running Tests
 
 To run tests for all katas:
@@ -40,6 +42,3 @@ This will create a new directory with the basic Go project structure including:
 - `kata-name.go`
 - `kata-name_test.go`
 
-## References
-
-For more kata descriptions and ideas, visit [Samman Coaching Katas](https://sammancoaching.org/kata_descriptions/index.html)
