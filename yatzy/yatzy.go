@@ -71,6 +71,19 @@ func (game *yatzyGame) Roll(dice [6]int) {
 	game.dice = dice
 }
 
+func (game *yatzyGame) GetScore(category category) int {
+	var result int
+
+	switch category {
+	case yatzy:
+		result = game.calculateYatzy()
+	case chance:
+		result = game.calculateChance()
+	}
+
+	return result
+}
+
 func (game *yatzyGame) calculateYatzy() int {
 	var firstDie = game.dice[0]
 	for i := 1; i < len(game.dice); i++ {
@@ -87,19 +100,6 @@ func (game *yatzyGame) calculateChance() int {
 		sum += die
 	}
 	return sum
-}
-
-func (game *yatzyGame) GetScore(category category) int {
-	var result int
-
-	switch category {
-	case yatzy:
-		result = game.calculateYatzy()
-	case chance:
-		result = game.calculateChance()
-	}
-
-	return result
 }
 
 func main() {
