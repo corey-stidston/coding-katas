@@ -38,25 +38,25 @@ Full house: If the dice are two of a kind and three of a kind, the player scores
 
 package main
 
-type category uint
+type category string
 
 const (
-	unknown category = iota
-	chance
-	yatzy
-	ones
-	twos
-	threes
-	fours
-	fives
-	sixes
-	pair
-	three_of_a_kind
-	four_of_a_kind
-	small_straight
-	large_straight
-	two_pairs
-	full_house
+	unknown         category = "unknown"
+	chance          category = "chance"
+	yatzy           category = "yatzy"
+	ones            category = "ones"
+	twos            category = "twos"
+	threes          category = "threes"
+	fours           category = "fours"
+	fives           category = "fives"
+	sixes           category = "sixes"
+	pair            category = "pair"
+	three_of_a_kind category = "three_of_a_kind"
+	four_of_a_kind  category = "four_of_a_kind"
+	small_straight  category = "small_straight"
+	large_straight  category = "large_straight"
+	two_pairs       category = "two_pairs"
+	full_house      category = "full_house"
 )
 
 type yatzyGame struct {
