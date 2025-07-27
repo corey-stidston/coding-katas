@@ -80,9 +80,17 @@ func (game *yatzyGame) GetScore(category category) int {
 	case chance:
 		result = game.calculateChance()
 	case ones:
-		result = game.calculateOnes()
+		result = game.sumOfMatchingDie(1)
 	case twos:
-		result = game.calculateTwos()
+		result = game.sumOfMatchingDie(2)
+	case threes:
+		result = game.sumOfMatchingDie(3)
+	case fours:
+		result = game.sumOfMatchingDie(4)
+	case fives:
+		result = game.sumOfMatchingDie(5)
+	case sixes:
+		result = game.sumOfMatchingDie(6)
 	}
 
 	return result
@@ -106,24 +114,16 @@ func (game *yatzyGame) calculateChance() int {
 	return sum
 }
 
-func (game *yatzyGame) calculateOnes() int {
-	return reduce(game.dice, exactMatchFunc(1))
-}
-
-func (game *yatzyGame) calculateTwos() int {
-	return reduce(game.dice, exactMatchFunc(2))
-}
-
-func exactMatchFunc(match int) func(int, int) int {
-	return func(acc int, current int) int {
+func (game *yatzyGame) sumOfMatchingDie(matchingDie int) int {
+	return reduce(game.dice, func(acc int, current int) int {
 		var value int
-		if current == match {
+		if current == matchingDie {
 			value = acc + current
 		} else {
 			value = acc
 		}
 		return value
-	}
+	})
 }
 
 func reduce(s [6]int, f func(int, int) int) int {
@@ -133,7 +133,6 @@ func reduce(s [6]int, f func(int, int) int) int {
 	}
 	return accumulator
 }
-
 
 func main() {
 	//
