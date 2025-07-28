@@ -115,23 +115,6 @@ func (game *yatzyGame) calculateChance() int {
 	}
 	return sum
 }
-// [
-// 	[1, 1],
-// 	[],
-// 	[3],
-// 	[4],
-// 	[5],
-// 	[6]
-// ]
-
-// [
-// 	2
-// 	0,
-// 	1
-// 	1
-// 	1
-// 	1
-// ]
 
 func (game *yatzyGame) calculatePair() int {
 	var countOfDie [6]int
@@ -139,7 +122,7 @@ func (game *yatzyGame) calculatePair() int {
 		countOfDie[game.dice[i] - 1] += 1
 	}
 
-	for i := 0; i < len(countOfDie); i++ {
+	for i := len(game.dice) - 1; i >= 0; i-- {
 		if countOfDie[i] == 2 {
 			return (i + 1) * 2
 		}
