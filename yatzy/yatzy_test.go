@@ -81,6 +81,16 @@ func TestYatzy(t *testing.T) {
 			category: three_of_a_kind,
 			expectedScore: 12,
 		},
+		{ 	// zero four of a kind
+			dice: [6]int{2,2,2,4,4,4},
+			category: four_of_a_kind,
+			expectedScore: 0,
+		},
+		{ 	// one four of a kind
+			dice: [6]int{5,2,1,5,5,5},
+			category: four_of_a_kind,
+			expectedScore: 20,
+		},
 	}
 
 	for _, tt := range tests {

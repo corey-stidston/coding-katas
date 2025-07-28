@@ -95,6 +95,8 @@ func (game *yatzyGame) GetScore(category category) int {
 		result = game.sumOfAKind(2)
 	case three_of_a_kind:
 		result = game.sumOfAKind(3)
+	case four_of_a_kind:
+		result = game.sumOfAKind(4)
 	}
 
 	return result
