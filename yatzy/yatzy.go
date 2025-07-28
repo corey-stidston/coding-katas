@@ -92,7 +92,9 @@ func (game *yatzyGame) GetScore(category category) int {
 	case sixes:
 		result = game.sumOfMatchingDie(6)
 	case pair:
-		result = game.calculatePair()
+		result = game.sumOfAKind(2)
+	case three_of_a_kind:
+		result = game.sumOfAKind(3)
 	}
 
 	return result
@@ -116,15 +118,15 @@ func (game *yatzyGame) calculateChance() int {
 	return sum
 }
 
-func (game *yatzyGame) calculatePair() int {
+func (game *yatzyGame) sumOfAKind(kind int) int {
 	var countOfDie [6]int
 	for i := 0; i < len(game.dice); i++ {
 		countOfDie[game.dice[i] - 1] += 1
 	}
 
 	for i := len(game.dice) - 1; i >= 0; i-- {
-		if countOfDie[i] == 2 {
-			return (i + 1) * 2
+		if countOfDie[i] == kind {
+			return (i + 1) * kind
 		}
 	}
 	return 0

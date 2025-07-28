@@ -61,10 +61,25 @@ func TestYatzy(t *testing.T) {
 			category: pair,
 			expectedScore: 2,
 		},
-		{ 	// two pairs
+		{ 	// two pairs - take highest pair
 			dice: [6]int{1,1,3,3,5,6},
 			category: pair,
 			expectedScore: 6,
+		},
+		{ 	// zero three of a kind
+			dice: [6]int{1,2,3,4,5,6},
+			category: three_of_a_kind,
+			expectedScore: 0,
+		},
+		{ 	// one three of a kind
+			dice: [6]int{2,2,2,4,5,6},
+			category: three_of_a_kind,
+			expectedScore: 6,
+		},
+		{ 	// two threes of a kind - take highest
+			dice: [6]int{2,2,2,4,4,4},
+			category: three_of_a_kind,
+			expectedScore: 12,
 		},
 	}
 
