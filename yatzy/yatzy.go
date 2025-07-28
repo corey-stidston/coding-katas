@@ -41,6 +41,7 @@ package main
 type category string
 
 const (
+	number_of_die   int      = 5
 	unknown         category = "unknown"
 	chance          category = "chance"
 	yatzy           category = "yatzy"
@@ -59,16 +60,18 @@ const (
 	full_house      category = "full_house"
 )
 
+type dice [number_of_die]int
+
 type yatzyGame struct {
-	dice [6]int
+	diceRoll dice
 }
 
 func YatzyGame() *yatzyGame {
 	return &yatzyGame{}
 }
 
-func (game *yatzyGame) Roll(dice [6]int) {
-	game.dice = dice
+func (game *yatzyGame) Roll(dice dice) {
+	game.diceRoll = dice
 }
 
 func (game *yatzyGame) GetScore(category category) int {
@@ -103,30 +106,30 @@ func (game *yatzyGame) GetScore(category category) int {
 }
 
 func (game *yatzyGame) calculateYatzy() int {
-	var firstDie = game.dice[0]
-	for i := 1; i < len(game.dice); i++ {
-		if game.dice[i] != firstDie {
+	var firstDie = game.diceRoll[0]
+	for i := 1; i < len(game.diceRoll); i++ {
+		if game.diceRoll[i] != firstDie {
 			return 0
 		}
 	}
-	return firstDie * 6
+	return firstDie * number_of_die
 }
 
 func (game *yatzyGame) calculateChance() int {
 	var sum int
-	for _, die := range game.dice {
+	for _, die := range game.diceRoll {
 		sum += die
 	}
 	return sum
 }
 
 func (game *yatzyGame) sumOfAKind(kind int) int {
-	var countOfDie [6]int
-	for i := 0; i < len(game.dice); i++ {
-		countOfDie[game.dice[i] - 1] += 1
+	var countOfDie dice
+	for i := 0; i < len(game.diceRoll); i++ {
+		countOfDie[game.diceRoll[i]-1] += 1
 	}
 
-	for i := len(game.dice) - 1; i >= 0; i-- {
+	for i := len(game.diceRoll) - 1; i >= 0; i-- {
 		if countOfDie[i] == kind {
 			return (i + 1) * kind
 		}
@@ -135,7 +138,7 @@ func (game *yatzyGame) sumOfAKind(kind int) int {
 }
 
 func (game *yatzyGame) sumOfMatchingDie(matchingDie int) int {
-	return reduce(game.dice, func(acc int, current int) int {
+	return reduce(game.diceRoll, func(acc int, current int) int {
 		var value int
 		if current == matchingDie {
 			value = acc + current
@@ -146,7 +149,7 @@ func (game *yatzyGame) sumOfMatchingDie(matchingDie int) int {
 	})
 }
 
-func reduce(dice [6]int, f func(int, int) int) int {
+func reduce(dice dice, f func(int, int) int) int {
 	accumulator := 0
 	for _, value := range dice {
 		accumulator = f(accumulator, value)
