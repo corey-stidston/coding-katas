@@ -66,6 +66,9 @@ type yatzyGame struct {
 	diceRoll dice
 }
 
+var smallStraight = dice{1,2,3,4,5}
+var largeStraight = dice{2,3,4,5,6}
+
 func YatzyGame() *yatzyGame {
 	return &yatzyGame{}
 }
@@ -101,16 +104,15 @@ func (game *yatzyGame) GetScore(category category) int {
 	case four_of_a_kind:
 		result = game.sumOfAKind(4)
 	case small_straight:
-		result = game.calculateSmallStraight()
+		result = game.exactMatch(smallStraight)
 	}
 
 	return result
 }
 
-func (game *yatzyGame) calculateSmallStraight() int {
-	smallStraight := dice{1, 2, 3, 4, 5}
-	if game.diceRoll == smallStraight {
-		return 15
+func (game *yatzyGame) exactMatch(straightType dice) int {
+	if game.diceRoll == straightType {
+		return game.sumOfDie()
 	}
 	return 0
 }
@@ -145,6 +147,12 @@ func (game *yatzyGame) sumOfAKind(kind int) int {
 		}
 	}
 	return 0
+}
+
+func (game *yatzyGame) sumOfDie() int {
+	return reduce(game.diceRoll, func(acc int, current int) int {
+		return acc + current
+	})
 }
 
 func (game *yatzyGame) sumOfMatchingDie(matchingDie int) int {
