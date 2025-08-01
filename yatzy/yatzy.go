@@ -137,14 +137,19 @@ func (game *yatzyGame) calculateChance() int {
 	return sum
 }
 
-func (game *yatzyGame) sumOfAKind(kind int) int {
-	var countOfDie dice
-	for i := 0; i < len(game.diceRoll); i++ {
-		countOfDie[game.diceRoll[i]-1] += 1
+func (game *yatzyGame) getDieCounts() [number_of_die]int {
+	var dieCounts dice
+	for _, die := range game.diceRoll {
+		dieCounts[die-1]++
 	}
+	return dieCounts
+}
+
+func (game *yatzyGame) sumOfAKind(kind int) int {
+	var dieCounts = game.getDieCounts()
 
 	for i := len(game.diceRoll) - 1; i >= 0; i-- {
-		if countOfDie[i] == kind {
+		if dieCounts[i] == kind {
 			return (i + 1) * kind
 		}
 	}
@@ -152,29 +157,21 @@ func (game *yatzyGame) sumOfAKind(kind int) int {
 }
 
 func (game *yatzyGame) sumOfDie() int {
-	return reduce(game.diceRoll, func(acc int, current int) int {
-		return acc + current
-	})
+	sum := 0
+    for _, die := range game.diceRoll {
+        sum += die
+    }
+    return sum
 }
 
 func (game *yatzyGame) sumOfMatchingDie(matchingDie int) int {
-	return reduce(game.diceRoll, func(acc int, current int) int {
-		var value int
-		if current == matchingDie {
-			value = acc + current
-		} else {
-			value = acc
-		}
-		return value
-	})
-}
-
-func reduce(dice dice, f func(int, int) int) int {
-	accumulator := 0
-	for _, value := range dice {
-		accumulator = f(accumulator, value)
-	}
-	return accumulator
+	sum := 0
+    for _, die := range game.diceRoll {
+        if die == matchingDie {
+            sum += die
+        }
+    }
+    return sum
 }
 
 func main() {
