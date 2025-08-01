@@ -100,9 +100,19 @@ func (game *yatzyGame) GetScore(category category) int {
 		result = game.sumOfAKind(3)
 	case four_of_a_kind:
 		result = game.sumOfAKind(4)
+	case small_straight:
+		result = game.calculateSmallStraight()
 	}
 
 	return result
+}
+
+func (game *yatzyGame) calculateSmallStraight() int {
+	smallStraight := dice{1, 2, 3, 4, 5}
+	if game.diceRoll == smallStraight {
+		return 15
+	}
+	return 0
 }
 
 func (game *yatzyGame) calculateYatzy() int {

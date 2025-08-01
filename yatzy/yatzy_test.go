@@ -86,6 +86,16 @@ func TestYatzy(t *testing.T) {
 			category:      four_of_a_kind,
 			expectedScore: 20,
 		},
+		{
+			dice:          dice{1, 2, 3, 4, 5},
+			category:      small_straight,
+			expectedScore: 15,
+		},
+		{ // invalid small straight
+			dice:          dice{5, 2, 3, 4, 5},
+			category:      small_straight,
+			expectedScore: 0,
+		},
 	}
 
 	for _, tt := range tests {
