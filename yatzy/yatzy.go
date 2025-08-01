@@ -105,6 +105,8 @@ func (game *yatzyGame) GetScore(category category) int {
 		result = game.sumOfAKind(4)
 	case small_straight:
 		result = game.exactMatch(smallStraight)
+	case large_straight:
+		result = game.exactMatch(largeStraight)
 	}
 
 	return result
