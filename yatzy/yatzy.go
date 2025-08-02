@@ -107,6 +107,23 @@ func (game *yatzyGame) GetScore(category category) int {
 }
 
 func (game *yatzyGame) fullHouse() int {
+	dieCounts := game.getDieCounts()
+
+	twoOfAKind := false
+	threeOfAKind := false
+
+	for _, dieCount := range dieCounts {
+		if dieCount == 2 {
+			twoOfAKind = true
+		}
+		if dieCount == 3 {
+			threeOfAKind = true
+		}
+	}
+
+	if twoOfAKind && threeOfAKind {
+		return game.sumOfDie()
+	}
 	return 0
 }
 
