@@ -97,6 +97,8 @@ func (game *yatzyGame) GetScore(category category) int {
 		result = game.straight(smallStraight)
 	case large_straight:
 		result = game.straight(largeStraight)
+	case two_pairs:
+		result = 0
 	}
 
 	return result

@@ -111,6 +111,21 @@ func TestYatzy(t *testing.T) {
 			category:      large_straight,
 			expectedScore: 0,
 		},
+		{ // no two pairs
+			dice:          dice{2, 3, 4, 5, 6},
+			category:      two_pairs,
+			expectedScore: 0,
+		},
+		{
+			dice:          dice{5, 5, 3, 2, 2},
+			category:      two_pairs,
+			expectedScore: 14,
+		},
+		{ // two pairs variance
+			dice:          dice{5, 5, 2, 2, 2},
+			category:      two_pairs,
+			expectedScore: 0,
+		},
 	}
 
 	for _, tt := range tests {
