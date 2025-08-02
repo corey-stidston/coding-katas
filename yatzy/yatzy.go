@@ -84,19 +84,9 @@ func (game *yatzyGame) GetScore(category category) int {
 	case yatzy:
 		result = game.yatzy()
 	case chance:
-		result = game.calculateChance()
-	case ones:
-		result = game.sumOfMatchingDie(1)
-	case twos:
-		result = game.sumOfMatchingDie(2)
-	case threes:
-		result = game.sumOfMatchingDie(3)
-	case fours:
-		result = game.sumOfMatchingDie(4)
-	case fives:
-		result = game.sumOfMatchingDie(5)
-	case sixes:
-		result = game.sumOfMatchingDie(6)
+		result = game.chance()
+	case ones, twos, threes, fours, fives, sixes:
+		result = game.sumOfMatchingDie(category)
 	case pair:
 		result = game.sumOfAKind(2)
 	case three_of_a_kind:
@@ -104,15 +94,15 @@ func (game *yatzyGame) GetScore(category category) int {
 	case four_of_a_kind:
 		result = game.sumOfAKind(4)
 	case small_straight:
-		result = game.exactMatch(smallStraight)
+		result = game.straight(smallStraight)
 	case large_straight:
-		result = game.exactMatch(largeStraight)
+		result = game.straight(largeStraight)
 	}
 
 	return result
 }
 
-func (game *yatzyGame) exactMatch(straightType dice) int {
+func (game *yatzyGame) straight(straightType dice) int {
 	if game.diceRoll == straightType {
 		return game.sumOfDie()
 	}
@@ -129,7 +119,7 @@ func (game *yatzyGame) yatzy() int {
 	return 0
 }
 
-func (game *yatzyGame) calculateChance() int {
+func (game *yatzyGame) chance() int {
 	var sum int
 	for _, die := range game.diceRoll {
 		sum += die
@@ -164,10 +154,18 @@ func (game *yatzyGame) sumOfDie() int {
     return sum
 }
 
-func (game *yatzyGame) sumOfMatchingDie(matchingDie int) int {
+func (game *yatzyGame) sumOfMatchingDie(category category) int {
+	categoryMap := map[string]int {
+		string(ones): 1,
+		string(twos): 2,
+		string(threes): 3,
+		string(fours): 4,
+		string(fives): 5,
+		string(sixes): 6,
+	}
 	sum := 0
     for _, die := range game.diceRoll {
-        if die == matchingDie {
+        if die == categoryMap[string(category)] {
             sum += die
         }
     }
