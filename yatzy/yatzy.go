@@ -98,10 +98,28 @@ func (game *yatzyGame) GetScore(category category) int {
 	case large_straight:
 		result = game.straight(largeStraight)
 	case two_pairs:
-		result = 0
+		result = game.twoPairs()
 	}
 
 	return result
+}
+
+func (game *yatzyGame) twoPairs() int {
+	dieCounts := game.getDieCounts()
+
+	pairs := 0
+	sumOfPairs := 0
+	for index, dieCount := range dieCounts {
+		if dieCount == 2 {
+			pairs++
+			sumOfPairs += 2 * (index + 1)
+		}
+	}
+
+	if pairs == 2 {
+		return sumOfPairs
+	}
+	return 0
 }
 
 func (game *yatzyGame) straight(straightType dice) int {
@@ -129,8 +147,8 @@ func (game *yatzyGame) chance() int {
 	return sum
 }
 
-func (game *yatzyGame) getDieCounts() [number_of_die]int {
-	var dieCounts dice
+func (game *yatzyGame) getDieCounts() [6]int {
+	var dieCounts [6]int
 	for _, die := range game.diceRoll {
 		dieCounts[die-1]++
 	}
