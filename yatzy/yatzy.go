@@ -66,8 +66,8 @@ type yatzyGame struct {
 	diceRoll dice
 }
 
-var smallStraight = dice{1,2,3,4,5}
-var largeStraight = dice{2,3,4,5,6}
+var smallStraight = dice{1, 2, 3, 4, 5}
+var largeStraight = dice{2, 3, 4, 5, 6}
 
 func YatzyGame() *yatzyGame {
 	return &yatzyGame{}
@@ -99,9 +99,15 @@ func (game *yatzyGame) GetScore(category category) int {
 		result = game.straight(largeStraight)
 	case two_pairs:
 		result = game.twoPairs()
+	case full_house:
+		result = game.fullHouse()
 	}
 
 	return result
+}
+
+func (game *yatzyGame) fullHouse() int {
+	return 0
 }
 
 func (game *yatzyGame) twoPairs() int {
@@ -168,28 +174,28 @@ func (game *yatzyGame) sumOfAKind(kind int) int {
 
 func (game *yatzyGame) sumOfDie() int {
 	sum := 0
-    for _, die := range game.diceRoll {
-        sum += die
-    }
-    return sum
+	for _, die := range game.diceRoll {
+		sum += die
+	}
+	return sum
 }
 
 func (game *yatzyGame) sumOfMatchingDie(category category) int {
-	categoryMap := map[string]int {
-		string(ones): 1,
-		string(twos): 2,
+	categoryMap := map[string]int{
+		string(ones):   1,
+		string(twos):   2,
 		string(threes): 3,
-		string(fours): 4,
-		string(fives): 5,
-		string(sixes): 6,
+		string(fours):  4,
+		string(fives):  5,
+		string(sixes):  6,
 	}
 	sum := 0
-    for _, die := range game.diceRoll {
-        if die == categoryMap[string(category)] {
-            sum += die
-        }
-    }
-    return sum
+	for _, die := range game.diceRoll {
+		if die == categoryMap[string(category)] {
+			sum += die
+		}
+	}
+	return sum
 }
 
 func main() {

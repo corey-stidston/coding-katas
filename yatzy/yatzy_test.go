@@ -126,6 +126,16 @@ func TestYatzy(t *testing.T) {
 			category:      two_pairs,
 			expectedScore: 0,
 		},
+		{
+			dice:          dice{5, 5, 3, 2, 2},
+			category:      full_house,
+			expectedScore: 0,
+		},
+		{
+			dice:          dice{5, 5, 2, 2, 2},
+			category:      full_house,
+			expectedScore: 16,
+		},
 	}
 
 	for _, tt := range tests {
