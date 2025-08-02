@@ -82,7 +82,7 @@ func (game *yatzyGame) GetScore(category category) int {
 
 	switch category {
 	case yatzy:
-		result = game.calculateYatzy()
+		result = game.yatzy()
 	case chance:
 		result = game.calculateChance()
 	case ones:
@@ -119,14 +119,14 @@ func (game *yatzyGame) exactMatch(straightType dice) int {
 	return 0
 }
 
-func (game *yatzyGame) calculateYatzy() int {
-	var firstDie = game.diceRoll[0]
-	for i := 1; i < len(game.diceRoll); i++ {
-		if game.diceRoll[i] != firstDie {
-			return 0
+func (game *yatzyGame) yatzy() int {
+	var dieCounts = game.getDieCounts()
+	for _, die := range dieCounts {
+		if die == 5 {
+			return 50
 		}
 	}
-	return firstDie * number_of_die
+	return 0
 }
 
 func (game *yatzyGame) calculateChance() int {

@@ -14,7 +14,12 @@ func TestYatzy(t *testing.T) {
 		{
 			dice:          dice{1, 1, 1, 1, 1},
 			category:      yatzy,
-			expectedScore: 5,
+			expectedScore: 50,
+		},
+		{
+			dice:          dice{2, 1, 1, 1, 1},
+			category:      yatzy,
+			expectedScore: 0,
 		},
 		{
 			dice:          dice{1, 2, 3, 4, 5},
