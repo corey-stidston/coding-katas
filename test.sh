@@ -9,7 +9,8 @@ NC='\033[0m'
 echo "Running Go tests in all subdirectories..."
 echo "----------------------------------------"
 
-for dir in $(find . -type f -name "$KATA_FILTER.go" -exec dirname {} \; | sort -u); do
+# Find directories that match the kata filter and contain go.mod
+for dir in $(find . -type d -name "$KATA_FILTER" | sort); do
     if [ -f "$dir/go.mod" ]; then
         echo -e "\nTesting in ${GREEN}$dir${NC}"
         (cd "$dir" && go test -v ./...)
