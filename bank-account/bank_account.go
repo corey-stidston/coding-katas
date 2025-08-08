@@ -30,17 +30,22 @@ package main
 
 import "fmt"
 
-func Deposit(amount int) {
+type bankAccount struct {
+    balance float32
+}
+
+func BankAccount() *bankAccount {
+	return &bankAccount{}
+}
+
+func (bankAccount *bankAccount) deposit(amount int) {
  //
 }
 
-func Withdraw(amount int) {
+func (bankAccount *bankAccount) withdraw(amount int) {
  //
 }
 
-func PrintStatement() {
+func (bankAccount *bankAccount) printStatement() {
 	fmt.Print("Date       || Amount || Balance")
-}
-
-func main() {
 }

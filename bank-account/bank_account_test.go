@@ -23,8 +23,10 @@ func captureOutput(f func()) string {
 }
 
 func TestPrintStatementEmpty(t *testing.T) {
+	bankAccount := BankAccount()
+
 	output := captureOutput(func() {
-		PrintStatement()
+		bankAccount.printStatement()
 	})
 	if output != "Date       || Amount || Balance" {
 		t.Errorf("Expected statement header in output, got: %q", output)
