@@ -56,5 +56,26 @@ func TestSingleDepositStatement(t *testing.T) {
 	}
 }
 
+func TestMultipleDepositStatement(t *testing.T) {
+	bankAccount := BankAccount()
+	bankAccount.deposit(100)
+	bankAccount.deposit(340)
+
+	output := captureOutput(func() {
+		bankAccount.printStatement()
+	})
+
+	today := time.Now().Format(time.DateOnly)
+
+	expectedOutput := fmt.Sprintf(`Date       || Amount || Balance
+%s || 100    || 100
+%s || 340    || 440
+`, today, today)
+
+	if output != expectedOutput {
+		t.Errorf("Expected %q, got: %q", expectedOutput, output)
+	}
+}
+
 // Single deposit, single withdrawal
 // Negative balance not allowed
