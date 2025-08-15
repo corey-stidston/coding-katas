@@ -61,7 +61,7 @@ func (bankAccount *bankAccount) printStatement() {
 
     // balance := 0
     for _, transaction := range bankAccount.transactions {
-        fmt.Printf("%s || %d    || %d", 
+        fmt.Printf("%s || %-7d|| %d", 
             transaction.datetime.Format(time.DateOnly), 
             transaction.amount,
             transaction.amount)
