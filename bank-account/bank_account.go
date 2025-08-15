@@ -28,10 +28,18 @@ Don’t worry about matching the exact formatting of the bank statement, the imp
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type bankAccount struct {
-    balance float32
+    transactions []transaction
+}
+
+type transaction struct {
+    amount int
+    datetime time.Time
 }
 
 func BankAccount() *bankAccount {
@@ -39,13 +47,24 @@ func BankAccount() *bankAccount {
 }
 
 func (bankAccount *bankAccount) deposit(amount int) {
- //
+    bankAccount.transactions = append(bankAccount.transactions, transaction{
+        amount: amount,
+        datetime: time.Now(),
+    })
 }
 
 func (bankAccount *bankAccount) withdraw(amount int) {
- //
 }
 
 func (bankAccount *bankAccount) printStatement() {
-	fmt.Print("Date       || Amount || Balance")
+	fmt.Print("Date       || Amount || Balance\n")
+
+    // balance := 0
+    for _, transaction := range bankAccount.transactions {
+        fmt.Printf("%s || %d    || %d", 
+            transaction.datetime.Format(time.DateOnly), 
+            transaction.amount,
+            transaction.amount)
+        fmt.Printf("\n")
+    }
 }
