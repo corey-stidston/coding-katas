@@ -54,6 +54,10 @@ func (bankAccount *bankAccount) deposit(amount int) {
 }
 
 func (bankAccount *bankAccount) withdraw(amount int) {
+    bankAccount.transactions = append(bankAccount.transactions, transaction{
+        amount: -1 * amount,
+        datetime: time.Now(),
+    })
 }
 
 func (bankAccount *bankAccount) printStatement() {

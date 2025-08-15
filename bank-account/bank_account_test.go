@@ -91,7 +91,7 @@ func TestSingleDepositAndWithdrawalStatement(t *testing.T) {
 
 	expectedOutput := fmt.Sprintf(`Date       || Amount || Balance
 %s || 550    || 550
-%s || -185    || 365
+%s || -185   || 365
 `, today, today)
 
 	if output != expectedOutput {
