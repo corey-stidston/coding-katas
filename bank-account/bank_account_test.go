@@ -105,7 +105,7 @@ func TestWithdrawalAmountGreaterThanBalance(t *testing.T) {
 
 	error := bankAccount.withdraw(150) // Withdraw more than deposited
 
-	expectedErrorMessage := "You cannot withdraw more than the available balance."
+	expectedErrorMessage := "you cannot withdraw more than the available balance"
 	if error == nil {
 		t.Errorf("Expected withdraw to return error %s", expectedErrorMessage)
 	} else if error.Error() != expectedErrorMessage {

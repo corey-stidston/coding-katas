@@ -29,6 +29,7 @@ Don’t worry about matching the exact formatting of the bank statement, the imp
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -51,6 +52,13 @@ func (bankAccount *bankAccount) deposit(amount int) {
 }
 
 func (bankAccount *bankAccount) withdraw(amount int) (error) {
+    balance := 0
+    for _, transaction := range bankAccount.transactions {
+        balance += transaction.amount
+    }
+    if amount > balance {
+        return errors.New("you cannot withdraw more than the available balance")
+    } 
     bankAccount.transact(amount * -1)
     return nil
 }
