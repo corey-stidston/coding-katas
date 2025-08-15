@@ -67,6 +67,5 @@ func (bankAccount *bankAccount) printStatement() {
             transaction.amount,
             balance)
         fmt.Printf("\n")
-
     }
 }
