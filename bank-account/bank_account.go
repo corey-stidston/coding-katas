@@ -47,15 +47,17 @@ func BankAccount() *bankAccount {
 }
 
 func (bankAccount *bankAccount) deposit(amount int) {
-    bankAccount.transactions = append(bankAccount.transactions, transaction{
-        amount: amount,
-        datetime: time.Now(),
-    })
+    bankAccount.transact(amount)
 }
 
-func (bankAccount *bankAccount) withdraw(amount int) {
+func (bankAccount *bankAccount) withdraw(amount int) (error) {
+    bankAccount.transact(amount * -1)
+    return nil
+}
+
+func (bankAccount *bankAccount) transact(amount int) {
     bankAccount.transactions = append(bankAccount.transactions, transaction{
-        amount: -1 * amount,
+        amount: amount,
         datetime: time.Now(),
     })
 }

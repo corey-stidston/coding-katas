@@ -99,4 +99,16 @@ func TestSingleDepositAndWithdrawalStatement(t *testing.T) {
 	}
 }
 
-// Negative balance not allowed
+func TestWithdrawalAmountGreaterThanBalance(t *testing.T) {
+	bankAccount := BankAccount()
+	bankAccount.deposit(100)
+
+	error := bankAccount.withdraw(150) // Withdraw more than deposited
+
+	expectedErrorMessage := "You cannot withdraw more than the available balance."
+	if error == nil {
+		t.Errorf("Expected withdraw to return error %s", expectedErrorMessage)
+	} else if error.Error() != expectedErrorMessage {
+		t.Errorf("Expected withdraw to return error %s, but it returned %s", expectedErrorMessage, error.Error())
+	}
+}
