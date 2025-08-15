@@ -59,12 +59,14 @@ func (bankAccount *bankAccount) withdraw(amount int) {
 func (bankAccount *bankAccount) printStatement() {
 	fmt.Print("Date       || Amount || Balance\n")
 
-    // balance := 0
+    balance := 0
     for _, transaction := range bankAccount.transactions {
+        balance += transaction.amount
         fmt.Printf("%s || %-7d|| %d", 
             transaction.datetime.Format(time.DateOnly), 
             transaction.amount,
-            transaction.amount)
+            balance)
         fmt.Printf("\n")
+
     }
 }
