@@ -49,7 +49,7 @@ func TestGetTotalPrice(t *testing.T) {
 					Price: 1.50,
 				},
 				{
-					Name: "apple",
+					Name:  "apple",
 					Price: 2.25,
 				},
 			},
@@ -63,7 +63,7 @@ func TestGetTotalPrice(t *testing.T) {
 					Price: 75.0,
 				},
 				{
-					Name: "olive oil",
+					Name:  "olive oil",
 					Price: 50,
 				},
 			},

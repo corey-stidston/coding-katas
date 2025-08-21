@@ -35,12 +35,12 @@ import (
 )
 
 type bankAccount struct {
-    transactions []transaction
+	transactions []transaction
 }
 
 type transaction struct {
-    amount int
-    datetime time.Time
+	amount   int
+	datetime time.Time
 }
 
 func BankAccount() *bankAccount {
@@ -48,38 +48,38 @@ func BankAccount() *bankAccount {
 }
 
 func (bankAccount *bankAccount) deposit(amount int) {
-    bankAccount.transact(amount)
+	bankAccount.transact(amount)
 }
 
-func (bankAccount *bankAccount) withdraw(amount int) (error) {
-    balance := 0
-    for _, transaction := range bankAccount.transactions {
-        balance += transaction.amount
-    }
-    if amount > balance {
-        return errors.New("you cannot withdraw more than the available balance")
-    } 
-    bankAccount.transact(amount * -1)
-    return nil
+func (bankAccount *bankAccount) withdraw(amount int) error {
+	balance := 0
+	for _, transaction := range bankAccount.transactions {
+		balance += transaction.amount
+	}
+	if amount > balance {
+		return errors.New("you cannot withdraw more than the available balance")
+	}
+	bankAccount.transact(amount * -1)
+	return nil
 }
 
 func (bankAccount *bankAccount) transact(amount int) {
-    bankAccount.transactions = append(bankAccount.transactions, transaction{
-        amount: amount,
-        datetime: time.Now(),
-    })
+	bankAccount.transactions = append(bankAccount.transactions, transaction{
+		amount:   amount,
+		datetime: time.Now(),
+	})
 }
 
 func (bankAccount *bankAccount) printStatement() {
 	fmt.Print("Date       || Amount || Balance\n")
 
-    balance := 0
-    for _, transaction := range bankAccount.transactions {
-        balance += transaction.amount
-        fmt.Printf("%s || %-7d|| %d", 
-            transaction.datetime.Format(time.DateOnly), 
-            transaction.amount,
-            balance)
-        fmt.Printf("\n")
-    }
+	balance := 0
+	for _, transaction := range bankAccount.transactions {
+		balance += transaction.amount
+		fmt.Printf("%s || %-7d|| %d",
+			transaction.datetime.Format(time.DateOnly),
+			transaction.amount,
+			balance)
+		fmt.Printf("\n")
+	}
 }
