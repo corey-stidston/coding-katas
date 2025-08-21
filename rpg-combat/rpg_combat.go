@@ -10,7 +10,7 @@ func Player() *player {
 	}
 }
 
-func (player *player) dealDamage(amount int) {
+func (player *player) damage(amount int) {
 	if player.isAlive() {
 		player.health -= amount
 	}
