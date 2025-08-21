@@ -10,5 +10,15 @@ func Player() *player {
 	}
 }
 
+func (player *player) dealDamage(amount int) {
+	if player.isAlive() {
+		player.health -= amount
+	}
+}
+
+func (player *player) isAlive() bool {
+	return player.health > 0
+}
+
 func main() {
 }
