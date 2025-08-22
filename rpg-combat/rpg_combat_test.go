@@ -70,3 +70,14 @@ func TestHeal(t *testing.T) {
 		t.Errorf("Expected the player to be healed by %d", healingAmount)
 	}
 }
+
+func TestPlayerCannotHealThemselves(t *testing.T) {
+    player1 := Player()
+
+    startingHealth := player1.health
+	player1.heal(player1, 100)
+
+	if player1.health != startingHealth {
+		t.Error("Expected the player to have the same health as they cannot heal themselves")
+	}
+}
