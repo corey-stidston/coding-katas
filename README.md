@@ -42,3 +42,12 @@ This will create a new directory with the basic Go project structure including:
 - `kata-name.go`
 - `kata-name_test.go`
 
+## Formatting
+
+The format.sh script is used to automatically format your Go code according to standard Go conventions. To use it, simply run:
+
+```bash
+./format.sh
+```
+
+This will format all Go files in the current directory and its subdirectories.
