@@ -19,22 +19,37 @@ func TestStartingAlive(t *testing.T) {
 }
 
 func TestDealingDamage(t *testing.T) {
+    player1 := Player()
+    player2 := Player()
+
 	expected := 900
-	player := Player()
+	
+    player1.dealDamage(player2, 100)
 
-	player.damage(100)
-
-	if player.health != expected {
-		t.Errorf("Expected the player's health to be %d but was %d", expected, player.health)
+	if player2.health != expected {
+		t.Errorf("Expected the player's health to be %d but was %d", expected, player2.health)
 	}
 }
 
+func TestPlayerCannotDealDamageToItself(t *testing.T) {
+    player1 := Player()
+
+    startingHealth := player1.health
+
+    player1.dealDamage(player1, 100)
+
+    if player1.health != startingHealth {
+        t.Error("Expected player's health to be unchanged as player's cannot deal damanage to themselves")
+    }
+}
+
 func TestPlayerDeath(t *testing.T) {
-	player := Player()
+	player1 := Player()
+    player2 := Player()
 
-	player.damage(1001)
+	player1.dealDamage(player2, 9999)
 
-	if player.isAlive() {
+	if player2.isAlive() {
 		t.Error("Expected the player to be dead after receiving damage")
 	}
 }
