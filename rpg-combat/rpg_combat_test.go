@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 func TestStartingHealth(t *testing.T) {
 	player := Player()
@@ -19,12 +22,12 @@ func TestStartingAlive(t *testing.T) {
 }
 
 func TestDealingDamage(t *testing.T) {
-    player1 := Player()
-    player2 := Player()
+	player1 := Player()
+	player2 := Player()
 
 	expected := 900
-	
-    player1.dealDamage(player2, 100)
+
+	player1.dealDamage(player2, 100)
 
 	if player2.health != expected {
 		t.Errorf("Expected the player's health to be %d but was %d", expected, player2.health)
@@ -32,20 +35,31 @@ func TestDealingDamage(t *testing.T) {
 }
 
 func TestPlayerCannotDealDamageToItself(t *testing.T) {
-    player1 := Player()
+	player1 := Player()
 
-    startingHealth := player1.health
+	err := player1.dealDamage(player1, 100)
 
-    player1.dealDamage(player1, 100)
+	if !errors.Is(err, ErrPlayersCannotDealDamageToThemselves) {
+		t.Error("Expected error when player deals damage to themselves")
+	}
+}
 
-    if player1.health != startingHealth {
-        t.Error("Expected player's health to be unchanged as player's cannot deal damanage to themselves")
-    }
+func TestPlayerCannotTakeDamageIfItsAlreadyDead(t *testing.T) {
+	player1 := Player()
+	player2 := Player()
+
+	player1.dealDamage(player2, 99999)
+
+	err := player1.dealDamage(player2, 100)
+
+	if !errors.Is(err, ErrDeadPlayersCannotBeDamaged) {
+		t.Error("Expected error when dead player is damaged")
+	}
 }
 
 func TestPlayerDeath(t *testing.T) {
 	player1 := Player()
-    player2 := Player()
+	player2 := Player()
 
 	player1.dealDamage(player2, 9999)
 
@@ -53,31 +67,30 @@ func TestPlayerDeath(t *testing.T) {
 		t.Error("Expected the player to be dead after receiving damage")
 	}
 
-    if player2.health != 0 {
+	if player2.health != 0 {
 		t.Error("Expected the dead player's health to be zero'")
 	}
 }
 
 func TestHeal(t *testing.T) {
-    player1 := Player()
-    player2 := Player()
+	player1 := Player()
+	player2 := Player()
 
-    healingAmount := 10
-    startingHealth := player2.health
+	healingAmount := 10
+	startingHealth := player2.health
 	player1.heal(player2, healingAmount)
 
-	if player2.health != startingHealth + healingAmount {
+	if player2.health != startingHealth+healingAmount {
 		t.Errorf("Expected the player to be healed by %d", healingAmount)
 	}
 }
 
 func TestPlayerCannotHealThemselves(t *testing.T) {
-    player1 := Player()
+	player1 := Player()
 
-    startingHealth := player1.health
-	player1.heal(player1, 100)
+	err := player1.heal(player1, 100)
 
-	if player1.health != startingHealth {
+	if !errors.Is(err, ErrPlayersCannotHealThemselves) {
 		t.Error("Expected the player to have the same health as they cannot heal themselves")
 	}
 }

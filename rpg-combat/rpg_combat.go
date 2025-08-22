@@ -1,5 +1,7 @@
 package main
 
+import "errors"
+
 type player struct {
 	health int
 }
@@ -10,12 +12,12 @@ func Player() *player {
 	}
 }
 
-func (player *player) dealDamage(target *player, amount int) {
+func (player *player) dealDamage(target *player, amount int) error {
 	if player == target {
-		return // player cannot deal damage to itself
+		return ErrPlayersCannotDealDamageToThemselves
 	}
 	if !target.isAlive() {
-		return // player cannot take damage if it is dead
+		return ErrDeadPlayersCannotBeDamaged
 	}
 
 	if amount > target.health {
@@ -23,19 +25,25 @@ func (player *player) dealDamage(target *player, amount int) {
 	} else {
 		target.health -= amount
 	}
+	return nil
 }
 
-func (player *player) heal(target *player, amount int) {
-	if (player == target) {
-		return // player cannot heal themselves
+func (player *player) heal(target *player, amount int) error {
+	if player == target {
+		return ErrPlayersCannotHealThemselves
 	}
-	
+
 	target.health += amount
+	return nil
 }
 
 func (player *player) isAlive() bool {
 	return player.health > 0
 }
+
+var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")
+var ErrDeadPlayersCannotBeDamaged = errors.New("dead players cannot be damaged")
+var ErrPlayersCannotHealThemselves = errors.New("players cannot heal themselves")
 
 func main() {
 }
