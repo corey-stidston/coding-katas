@@ -57,3 +57,16 @@ func TestPlayerDeath(t *testing.T) {
 		t.Error("Expected the dead player's health to be zero'")
 	}
 }
+
+func TestHeal(t *testing.T) {
+    player1 := Player()
+    player2 := Player()
+
+    healingAmount := 10
+    startingHealth := player2.health
+	player1.heal(player2, healingAmount)
+
+	if player2.health != startingHealth + healingAmount {
+		t.Errorf("Expected the player to be healed by %d", healingAmount)
+	}
+}

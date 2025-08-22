@@ -25,6 +25,10 @@ func (player *player) dealDamage(target *player, amount int) {
 	}
 }
 
+func (player *player) heal(target *player, amount int) {
+
+}
+
 func (player *player) isAlive() bool {
 	return player.health > 0
 }
