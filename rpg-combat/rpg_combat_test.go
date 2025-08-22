@@ -52,4 +52,8 @@ func TestPlayerDeath(t *testing.T) {
 	if player2.isAlive() {
 		t.Error("Expected the player to be dead after receiving damage")
 	}
+
+    if player2.health != 0 {
+		t.Error("Expected the dead player's health to be zero'")
+	}
 }

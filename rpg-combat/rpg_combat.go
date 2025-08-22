@@ -18,7 +18,11 @@ func (player *player) dealDamage(target *player, amount int) {
 		return // player cannot take damage if it is dead
 	}
 
-	target.health -= amount
+	if amount > target.health {
+		target.health = 0 // player health cannot be less than zero
+	} else {
+		target.health -= amount
+	}
 }
 
 func (player *player) isAlive() bool {
