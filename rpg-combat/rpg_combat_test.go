@@ -141,3 +141,19 @@ func TestAnAttacker5LevelsBelowTheTargetHasDamageReducedByHalf(t *testing.T) {
 		t.Errorf("Expected damage to be halved. Expected health: %d, Result: %d", expectedHealth, player2.health)
 	}
 }
+
+func TestAnAttacker5LevelsAboveTheTargetHasDamageIncreasedBy50pc(t *testing.T) {
+	player1 := player{
+		health: 1000,
+		level: 6,
+	}
+	player2 := Player()
+
+	damageAmount := 100
+	expectedHealth := player2.health - damageAmount - damageAmount / 2
+	player1.dealDamage(player2, damageAmount)
+
+	if player2.health != expectedHealth {
+		t.Errorf("Expected damage to be increased by 50pc. Expected health: %d, Result: %d", expectedHealth, player2.health)
+	}
+}
