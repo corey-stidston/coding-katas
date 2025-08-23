@@ -22,6 +22,10 @@ func (player *player) dealDamage(target *player, amount int) error {
 		return ErrDeadPlayersCannotBeDamaged
 	}
 
+	if target.level - player.level >= 5 {
+		amount = amount / 2
+	}
+
 	if amount > target.health {
 		target.health = 0 // player health cannot be less than zero
 	} else {
