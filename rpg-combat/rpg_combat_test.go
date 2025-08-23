@@ -94,3 +94,34 @@ func TestPlayerCannotHealThemselves(t *testing.T) {
 		t.Error("Expected the player to have the same health as they cannot heal themselves")
 	}
 }
+
+func TestPlayerMaximumHealth(t *testing.T) {
+
+	tests := []struct {
+		level int
+		expectedHealth int
+	}{
+		{
+			level: 1,
+			expectedHealth: 1000,
+		},
+		{
+			level: 5,
+			expectedHealth: 1000,
+		},
+		{
+			level: 6,
+			expectedHealth: 1500,
+		},
+	}
+
+	for _, test := range tests {
+		player := player{
+			level: test.level,
+		}
+
+		if player.getMaxHealth() != test.expectedHealth {
+			t.Errorf("Expected the player at level %d to have a maximum health of %d, not %d", test.level, test.expectedHealth, player.getMaxHealth())
+		}
+	}
+}

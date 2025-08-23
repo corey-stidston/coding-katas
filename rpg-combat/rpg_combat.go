@@ -4,11 +4,13 @@ import "errors"
 
 type player struct {
 	health int
+	level int
 }
 
 func Player() *player {
 	return &player{
 		health: 1000,
+		level: 1,
 	}
 }
 
@@ -39,6 +41,14 @@ func (player *player) heal(target *player, amount int) error {
 
 func (player *player) isAlive() bool {
 	return player.health > 0
+}
+
+func (player *player) getMaxHealth() int {
+	if player.level < 6 {
+		return 1000
+	} else {
+		return 1500
+	}
 }
 
 var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")
