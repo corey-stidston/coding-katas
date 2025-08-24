@@ -37,12 +37,8 @@ func (player *player) dealDamage(target *player, amount int) error {
 	if !target.isAlive() {
 		return ErrDeadPlayersCannotBeDamaged
 	}
-	
-	for fac := range player.factions {
-		_, ok := target.factions[fac]
-		if ok {
-			return ErrPlayersCannotDamageAllies
-		}
+	if player.isAnAllyTo(target) { 
+		return ErrPlayersCannotDamageAllies
 	}
 
 	if target.level - player.level >= 5 {
@@ -62,6 +58,9 @@ func (player *player) dealDamage(target *player, amount int) error {
 func (player *player) heal(target *player, amount int) error {
 	if player == target {
 		return ErrPlayersCannotHealThemselves
+	}
+	if !player.isAnAllyTo(target) {
+		return ErrPlayersCanOnlyHealAllies
 	}
 
 	target.health += amount
@@ -98,6 +97,18 @@ func (player *player) leaveFaction(faction *faction) {
 	delete(player.factions, faction)
 }
 
+func (player *player) isAnAllyTo(target *player) bool {
+	var allies bool
+	for fac := range player.factions {
+		_, ok := target.factions[fac]
+		if ok {
+			allies = true
+			break;
+		}
+	}
+	return allies
+}
+
 func (faction *faction) getMembers() []*player {
 	var members []*player
 	for mem := range faction.members {
@@ -110,7 +121,7 @@ var ErrPlayersCannotDamageAllies = errors.New("players cannot deal damage to all
 var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")
 var ErrDeadPlayersCannotBeDamaged = errors.New("dead players cannot be damaged")
 var ErrPlayersCannotHealThemselves = errors.New("players cannot heal themselves")
-
+var ErrPlayersCanOnlyHealAllies = errors.New("players can only heal allies")
 
 func main() {
 }

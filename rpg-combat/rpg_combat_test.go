@@ -55,7 +55,7 @@ func TestPlayerCannotDealDamageToAllies(t *testing.T) {
 }
 
 func TestPlayerDealingDamageToNonAlly(t *testing.T) {
-	var player1, player2, _, _ = testSetup2PlayersInSeparateFactions()
+	player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
 
 	damage := 100
 	startingHealth := player2.health
@@ -105,9 +105,8 @@ func TestPlayerDeath(t *testing.T) {
 	}
 }
 
-func TestHeal(t *testing.T) {
-	player1 := Player()
-	player2 := Player()
+func TestPlayersThatAreAlliesCanHeal(t *testing.T) {
+	player1, player2, _ := testSetup2PlayersInTheSameFaction()
 
 	healingAmount := 10
 	startingHealth := player2.health
@@ -115,6 +114,16 @@ func TestHeal(t *testing.T) {
 
 	if player2.health != startingHealth+healingAmount {
 		t.Errorf("Expected the player to be healed by %d", healingAmount)
+	}
+}
+
+func TestPlayersThatAreNotAlliesCannotHeal(t *testing.T) {
+	player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
+
+	err := player1.heal(player2, 10)
+
+	if !errors.Is(err, ErrPlayersCanOnlyHealAllies) {
+		t.Error("Expected an error that players can only heal allies")
 	}
 }
 
