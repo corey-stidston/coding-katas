@@ -73,6 +73,24 @@ func (player *player) joinFaction(faction *faction) {
 	player.factions = append(player.factions, faction)
 }
 
+func (player *player) leaveFaction(faction *faction) {
+	var indexOfMember int
+	for index, member := range faction.members {
+		if member == player {
+			indexOfMember = index
+		}
+	}
+	faction.members = append(faction.members[:indexOfMember], faction.members[indexOfMember+1:]...)
+
+	var indexOfFaction int
+	for index, fact := range player.factions {
+		if fact == faction {
+			indexOfFaction = index
+		}
+	}
+	player.factions = append(player.factions[:indexOfFaction], player.factions[indexOfFaction+1:]...)
+}
+
 var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")
 var ErrDeadPlayersCannotBeDamaged = errors.New("dead players cannot be damaged")
 var ErrPlayersCannotHealThemselves = errors.New("players cannot heal themselves")

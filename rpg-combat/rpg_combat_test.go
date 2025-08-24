@@ -180,3 +180,19 @@ func TestPlayerJoiningFaction(t *testing.T) {
 		t.Error("Expected the faction to have the player as a member")
 	}
 }
+
+func TestPlayerLeavingFaction(t *testing.T) {
+	faction := Faction()
+	player := Player()
+
+	player.joinFaction(faction)
+	player.leaveFaction(faction)
+
+	if len(player.factions) != 0 {
+		t.Error("Expected the player to no longer be a member of the faction")
+	}
+
+	if len(faction.members) != 0 {
+		t.Error("Expected the faction to have no members")
+	}
+}
