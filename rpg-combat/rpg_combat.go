@@ -7,10 +7,20 @@ type player struct {
 	level int
 }
 
+type faction struct {
+	members []*player
+}
+
 func Player() *player {
 	return &player{
 		health: 1000,
 		level: 1,
+	}
+}
+
+func Faction() *faction {
+	return &faction{
+
 	}
 }
 
@@ -57,8 +67,12 @@ func (player *player) getMaxHealth() int {
 	}
 }
 
-func (player *player) getFactions() []string {
-	return []string{}
+func (player *player) getFactions() []*faction {
+	return []*faction{}
+}
+
+func (player *player) joinFaction(faction *faction) {
+	faction.members = append(faction.members, player)
 }
 
 var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")

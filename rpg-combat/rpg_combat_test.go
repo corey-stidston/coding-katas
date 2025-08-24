@@ -165,3 +165,14 @@ func TestNewPlayersDoNotBelongToAFaction(t *testing.T) {
 		t.Error("Expected that a new player does not belong to a faction")
 	}
 }
+
+func TestPlayerJoiningFaction(t *testing.T) {
+	faction := Faction()
+	player := Player()
+
+	player.joinFaction(faction)
+
+	if len(player.getFactions()) != 1 || player.getFactions()[0] != faction {
+		t.Error("Expected the player to belong to the faction")
+	}
+}
