@@ -172,11 +172,11 @@ func TestPlayerJoiningFaction(t *testing.T) {
 
 	player.joinFaction(faction)
 
-	if len(player.factions) != 1 || player.factions[0] != faction {
+	if len(player.getFactions()) != 1 || player.getFactions()[0] != faction {
 		t.Error("Expected the player to belong to the faction")
 	}
 
-	if len(faction.members) != 1 || faction.members[0] != player {
+	if len(faction.getMembers()) != 1 || faction.getMembers()[0] != player {
 		t.Error("Expected the faction to have the player as a member")
 	}
 }
@@ -188,11 +188,27 @@ func TestPlayerLeavingFaction(t *testing.T) {
 	player.joinFaction(faction)
 	player.leaveFaction(faction)
 
-	if len(player.factions) != 0 {
+	if len(player.getFactions()) != 0 {
 		t.Error("Expected the player to no longer be a member of the faction")
 	}
 
 	if len(faction.members) != 0 {
 		t.Error("Expected the faction to have no members")
+	}
+}
+
+func TestAPlayerCannotJoinFactionMultipleTimes(t *testing.T) {
+	faction := Faction()
+	player := Player()
+
+	player.joinFaction(faction)
+	player.joinFaction(faction)
+
+	if len(player.getFactions()) != 1 {
+		t.Error("Expected the player to belong in the faction exactly once")
+	}
+
+	if len(faction.members) != 1 {
+		t.Error("Expected the faction to have exactly one member")
 	}
 }

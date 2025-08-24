@@ -5,23 +5,18 @@ import "errors"
 type player struct {
 	health int
 	level int
-	factions []*faction
+	factions map[*faction]bool
 }
 
 type faction struct {
-	members []*player
+	members map[*player]bool
 }
 
 func Player() *player {
 	return &player{
 		health: 1000,
 		level: 1,
-	}
-}
-
-func Faction() *faction {
-	return &faction{
-
+		factions: make(map[*faction]bool),
 	}
 }
 
@@ -68,27 +63,40 @@ func (player *player) getMaxHealth() int {
 	}
 }
 
+func (player *player) getFactions() []*faction {
+	var factions []*faction
+	for fac, isMemberOf := range player.factions {
+		if isMemberOf {
+			factions = append(factions, fac)
+		}
+	}
+	return factions
+}
+
 func (player *player) joinFaction(faction *faction) {
-	faction.members = append(faction.members, player)
-	player.factions = append(player.factions, faction)
+	faction.members[player] = true
+	player.factions[faction] = true
 }
 
 func (player *player) leaveFaction(faction *faction) {
-	var indexOfMember int
-	for index, member := range faction.members {
-		if member == player {
-			indexOfMember = index
-		}
-	}
-	faction.members = append(faction.members[:indexOfMember], faction.members[indexOfMember+1:]...)
+	delete(faction.members, player)
+	delete(player.factions, faction)
+}
 
-	var indexOfFaction int
-	for index, fact := range player.factions {
-		if fact == faction {
-			indexOfFaction = index
+func Faction() *faction {
+	return &faction{
+		members: make(map[*player]bool),
+	}
+}
+
+func (faction *faction) getMembers() []*player {
+	var members []*player
+	for mem, isMemberOf:= range faction.members {
+		if isMemberOf {
+			members = append(members, mem)
 		}
 	}
-	player.factions = append(player.factions[:indexOfFaction], player.factions[indexOfFaction+1:]...)
+	return members
 }
 
 var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")
