@@ -3,8 +3,8 @@ package main
 import "errors"
 
 type player struct {
-	health int
-	level int
+	health   int
+	level    int
 	factions map[*faction]playerFactionLink
 }
 
@@ -12,12 +12,12 @@ type faction struct {
 	members map[*player]playerFactionLink
 }
 
-type playerFactionLink struct {}
+type playerFactionLink struct{}
 
 func Player() *player {
 	return &player{
-		health: 1000,
-		level: 1,
+		health:   1000,
+		level:    1,
 		factions: make(map[*faction]playerFactionLink),
 	}
 }
@@ -35,14 +35,14 @@ func (player *player) dealDamage(target *player, amount int) error {
 	if !target.isAlive() {
 		return ErrDeadPlayersCannotBeDamaged
 	}
-	if player.isAnAllyTo(target) { 
+	if player.isAnAllyTo(target) {
 		return ErrPlayersCannotDamageAllies
 	}
 
-	if target.level - player.level >= 5 {
+	if target.level-player.level >= 5 {
 		amount = amount / 2
-	} else if player.level - target.level >= 5 {
-		amount = amount + amount / 2
+	} else if player.level-target.level >= 5 {
+		amount = amount + amount/2
 	}
 
 	if amount > target.health {
@@ -101,7 +101,7 @@ func (player *player) isAnAllyTo(target *player) bool {
 		_, ok := target.factions[fac]
 		if ok {
 			allies = true
-			break;
+			break
 		}
 	}
 	return allies

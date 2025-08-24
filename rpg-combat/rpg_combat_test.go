@@ -140,19 +140,19 @@ func TestPlayerCannotHealThemselves(t *testing.T) {
 func TestPlayerMaximumHealth(t *testing.T) {
 
 	tests := []struct {
-		level int
+		level          int
 		expectedHealth int
 	}{
 		{
-			level: 1,
+			level:          1,
 			expectedHealth: 1000,
 		},
 		{
-			level: 5,
+			level:          5,
 			expectedHealth: 1000,
 		},
 		{
-			level: 6,
+			level:          6,
 			expectedHealth: 1500,
 		},
 	}
@@ -172,11 +172,11 @@ func TestAnAttacker5LevelsBelowTheTargetHasDamageReducedByHalf(t *testing.T) {
 	player1 := Player()
 	player2 := player{
 		health: 1000,
-		level: 6,
+		level:  6,
 	}
 
 	damageAmount := 100
-	expectedHealth := player2.health - damageAmount / 2
+	expectedHealth := player2.health - damageAmount/2
 	player1.dealDamage(&player2, damageAmount)
 
 	if player2.health != expectedHealth {
@@ -187,12 +187,12 @@ func TestAnAttacker5LevelsBelowTheTargetHasDamageReducedByHalf(t *testing.T) {
 func TestAnAttacker5LevelsAboveTheTargetHasDamageIncreasedBy50pc(t *testing.T) {
 	player1 := player{
 		health: 1000,
-		level: 6,
+		level:  6,
 	}
 	player2 := Player()
 
 	damageAmount := 100
-	expectedHealth := player2.health - damageAmount - damageAmount / 2
+	expectedHealth := player2.health - damageAmount - damageAmount/2
 	player1.dealDamage(player2, damageAmount)
 
 	if player2.health != expectedHealth {
