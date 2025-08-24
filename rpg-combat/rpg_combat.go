@@ -5,18 +5,28 @@ import "errors"
 type player struct {
 	health int
 	level int
-	factions map[*faction]bool
+	factions map[*faction]playerFactionLink
 }
 
 type faction struct {
-	members map[*player]bool
+	members map[*player]playerFactionLink
+}
+
+type playerFactionLink struct {
+	
 }
 
 func Player() *player {
 	return &player{
 		health: 1000,
 		level: 1,
-		factions: make(map[*faction]bool),
+		factions: make(map[*faction]playerFactionLink),
+	}
+}
+
+func Faction() *faction {
+	return &faction{
+		members: make(map[*player]playerFactionLink),
 	}
 }
 
@@ -26,6 +36,13 @@ func (player *player) dealDamage(target *player, amount int) error {
 	}
 	if !target.isAlive() {
 		return ErrDeadPlayersCannotBeDamaged
+	}
+	
+	for fac := range player.factions {
+		_, ok := target.factions[fac]
+		if ok {
+			return ErrPlayersCannotDamageAllies
+		}
 	}
 
 	if target.level - player.level >= 5 {
@@ -65,17 +82,15 @@ func (player *player) getMaxHealth() int {
 
 func (player *player) getFactions() []*faction {
 	var factions []*faction
-	for fac, isMemberOf := range player.factions {
-		if isMemberOf {
-			factions = append(factions, fac)
-		}
+	for fac := range player.factions {
+		factions = append(factions, fac)
 	}
 	return factions
 }
 
 func (player *player) joinFaction(faction *faction) {
-	faction.members[player] = true
-	player.factions[faction] = true
+	faction.members[player] = playerFactionLink{}
+	player.factions[faction] = playerFactionLink{}
 }
 
 func (player *player) leaveFaction(faction *faction) {
@@ -83,25 +98,19 @@ func (player *player) leaveFaction(faction *faction) {
 	delete(player.factions, faction)
 }
 
-func Faction() *faction {
-	return &faction{
-		members: make(map[*player]bool),
-	}
-}
-
 func (faction *faction) getMembers() []*player {
 	var members []*player
-	for mem, isMemberOf:= range faction.members {
-		if isMemberOf {
-			members = append(members, mem)
-		}
+	for mem := range faction.members {
+		members = append(members, mem)
 	}
 	return members
 }
 
+var ErrPlayersCannotDamageAllies = errors.New("players cannot deal damage to allies")
 var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")
 var ErrDeadPlayersCannotBeDamaged = errors.New("dead players cannot be damaged")
 var ErrPlayersCannotHealThemselves = errors.New("players cannot heal themselves")
+
 
 func main() {
 }

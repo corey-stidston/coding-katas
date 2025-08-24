@@ -5,6 +5,29 @@ import (
 	"testing"
 )
 
+func testSetup2PlayersInTheSameFaction() (*player, *player, *faction) {
+	player1 := Player()
+	player2 := Player()
+	faction1 := Faction()
+
+	player1.joinFaction(faction1)
+	player2.joinFaction(faction1)
+
+	return player1, player2, faction1
+}
+
+func testSetup2PlayersInSeparateFactions() (*player, *player, *faction, *faction) {
+	player1 := Player()
+	player2 := Player()
+	faction1 := Faction()
+	faction2 := Faction()
+
+	player1.joinFaction(faction1)
+	player2.joinFaction(faction2)
+
+	return player1, player2, faction1, faction2
+}
+
 func TestStartingHealth(t *testing.T) {
 	player := Player()
 
@@ -21,16 +44,26 @@ func TestStartingAlive(t *testing.T) {
 	}
 }
 
-func TestDealingDamage(t *testing.T) {
-	player1 := Player()
-	player2 := Player()
+func TestPlayerCannotDealDamageToAllies(t *testing.T) {
+	var player1, player2, _ = testSetup2PlayersInTheSameFaction()
 
-	expected := 900
+	err := player1.dealDamage(player2, 100)
 
-	player1.dealDamage(player2, 100)
+	if !errors.Is(err, ErrPlayersCannotDamageAllies) {
+		t.Error("Expected error when player deals damage to an ally")
+	}
+}
 
-	if player2.health != expected {
-		t.Errorf("Expected the player's health to be %d but was %d", expected, player2.health)
+func TestPlayerDealingDamageToNonAlly(t *testing.T) {
+	var player1, player2, _, _ = testSetup2PlayersInSeparateFactions()
+
+	damage := 100
+	startingHealth := player2.health
+	expectedHealth := startingHealth - damage
+	player1.dealDamage(player2, damage)
+
+	if player2.health != expectedHealth {
+		t.Errorf("Expected player 2 health to be %d, but was %d", expectedHealth, player2.health)
 	}
 }
 
