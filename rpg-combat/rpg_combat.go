@@ -57,6 +57,10 @@ func (player *player) getMaxHealth() int {
 	}
 }
 
+func (player *player) getFactions() []string {
+	return []string{}
+}
+
 var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")
 var ErrDeadPlayersCannotBeDamaged = errors.New("dead players cannot be damaged")
 var ErrPlayersCannotHealThemselves = errors.New("players cannot heal themselves")

@@ -157,3 +157,11 @@ func TestAnAttacker5LevelsAboveTheTargetHasDamageIncreasedBy50pc(t *testing.T) {
 		t.Errorf("Expected damage to be increased by 50pc. Expected health: %d, Result: %d", expectedHealth, player2.health)
 	}
 }
+
+func TestNewPlayersDoNotBelongToAFaction(t *testing.T) {
+	player := Player()
+
+	if len(player.getFactions()) != 0 {
+		t.Error("Expected that a new player does not belong to a faction")
+	}
+}
