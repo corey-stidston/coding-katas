@@ -161,7 +161,7 @@ func TestAnAttacker5LevelsAboveTheTargetHasDamageIncreasedBy50pc(t *testing.T) {
 func TestNewPlayersDoNotBelongToAFaction(t *testing.T) {
 	player := Player()
 
-	if len(player.getFactions()) != 0 {
+	if len(player.factions) != 0 {
 		t.Error("Expected that a new player does not belong to a faction")
 	}
 }
@@ -172,7 +172,11 @@ func TestPlayerJoiningFaction(t *testing.T) {
 
 	player.joinFaction(faction)
 
-	if len(player.getFactions()) != 1 || player.getFactions()[0] != faction {
+	if len(player.factions) != 1 || player.factions[0] != faction {
 		t.Error("Expected the player to belong to the faction")
+	}
+
+	if len(faction.members) != 1 || faction.members[0] != player {
+		t.Error("Expected the faction to have the player as a member")
 	}
 }

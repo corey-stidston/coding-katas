@@ -5,6 +5,7 @@ import "errors"
 type player struct {
 	health int
 	level int
+	factions []*faction
 }
 
 type faction struct {
@@ -67,12 +68,9 @@ func (player *player) getMaxHealth() int {
 	}
 }
 
-func (player *player) getFactions() []*faction {
-	return []*faction{}
-}
-
 func (player *player) joinFaction(faction *faction) {
 	faction.members = append(faction.members, player)
+	player.factions = append(player.factions, faction)
 }
 
 var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal damage to themselves")
