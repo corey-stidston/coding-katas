@@ -12,9 +12,7 @@ type faction struct {
 	members map[*player]playerFactionLink
 }
 
-type playerFactionLink struct {
-	
-}
+type playerFactionLink struct {}
 
 func Player() *player {
 	return &player{
@@ -124,4 +122,5 @@ var ErrPlayersCannotHealThemselves = errors.New("players cannot heal themselves"
 var ErrPlayersCanOnlyHealAllies = errors.New("players can only heal allies")
 
 func main() {
+	//
 }
