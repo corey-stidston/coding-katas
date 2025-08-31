@@ -114,7 +114,7 @@ func TestPlayersThatAreAlliesCanHeal(t *testing.T) {
 	player3.dealDamage(player2, 100)
 	player1.heal(player2, healingAmount)
 
-	expectedHealth := startingHealth-100+healingAmount
+	expectedHealth := startingHealth - 100 + healingAmount
 
 	if player2.health != expectedHealth {
 		t.Errorf("Expected the player to be healed by %d. Their expected health: %d, actual health: %d", healingAmount, expectedHealth, player2.health)
@@ -274,12 +274,14 @@ func TestAPlayerCannotJoinFactionMultipleTimes(t *testing.T) {
 
 func TestAPlayerCanHealWithAMagicObject(t *testing.T) {
 	player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
+	const (
+		startingMagicalObjectHealth = 100
+		damage                      = 90
+		healingAmount               = 10
+	)
 	startingHealth := player1.health
-	startingMagicalObjectHealth := 100
-	damage := 90
-	healingAmount := 10
-	player2.dealDamage(player1, damage)
 
+	player2.dealDamage(player1, damage)
 	healingMagicalObject := HealingMagicalObject(startingMagicalObjectHealth)
 	player1.healWithMagicalObject(healingMagicalObject, healingAmount)
 
@@ -291,6 +293,6 @@ func TestAPlayerCanHealWithAMagicObject(t *testing.T) {
 	}
 
 	if healingMagicalObject.health != expectedMagicalObjectHealth {
-		t.Errorf("Expected the healing magical object to have a health of %d. but was %d", expectedMagicalObjectHealth, healingMagicalObject.health)
+		t.Errorf("Expected the healing magical object to have a health of %d, but was %d", expectedMagicalObjectHealth, healingMagicalObject.health)
 	}
 }
