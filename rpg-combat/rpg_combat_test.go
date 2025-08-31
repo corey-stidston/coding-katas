@@ -271,3 +271,26 @@ func TestAPlayerCannotJoinFactionMultipleTimes(t *testing.T) {
 		t.Error("Expected the faction to have exactly one member")
 	}
 }
+
+func TestAPlayerCanHealWithAMagicObject(t *testing.T) {
+	player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
+	startingHealth := player1.health
+	startingMagicalObjectHealth := 100
+	damage := 90
+	healingAmount := 10
+	player2.dealDamage(player1, damage)
+
+	healingMagicalObject := HealingMagicalObject(startingMagicalObjectHealth)
+	player1.healWithMagicalObject(healingMagicalObject, healingAmount)
+
+	expectedHealth := startingHealth - damage + healingAmount
+	expectedMagicalObjectHealth := startingMagicalObjectHealth - healingAmount
+
+	if player1.health != expectedHealth {
+		t.Errorf("Expected health of the player to be %d, but was %d", expectedHealth, player1.health)
+	}
+
+	if healingMagicalObject.health != expectedMagicalObjectHealth {
+		t.Errorf("Expected the healing magical object to have a health of %d. but was %d", expectedMagicalObjectHealth, healingMagicalObject.health)
+	}
+}

@@ -14,6 +14,10 @@ type faction struct {
 
 type playerFactionLink struct{}
 
+type healingMagicalObject struct {
+	health int
+}
+
 func Player() *player {
 	return &player{
 		health:   1000,
@@ -26,6 +30,17 @@ func Faction() *faction {
 	return &faction{
 		members: make(map[*player]playerFactionLink),
 	}
+}
+
+func HealingMagicalObject(health int) *healingMagicalObject {
+	return &healingMagicalObject{
+		health: health,
+	}
+}
+
+func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount int) {
+	player.health += amount
+	hmo.health -= amount
 }
 
 func (player *player) dealDamage(target *player, amount int) error {
