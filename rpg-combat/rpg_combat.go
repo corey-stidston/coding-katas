@@ -61,6 +61,11 @@ func (player *player) heal(target *player, amount int) error {
 		return ErrPlayersCanOnlyHealAllies
 	}
 
+	healthDifference := target.getMaxHealth() - target.health
+	if amount > healthDifference {
+		amount = healthDifference
+	}
+
 	target.health += amount
 	return nil
 }

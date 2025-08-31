@@ -107,22 +107,27 @@ func TestPlayerDeath(t *testing.T) {
 
 func TestPlayersThatAreAlliesCanHeal(t *testing.T) {
 	player1, player2, _ := testSetup2PlayersInTheSameFaction()
+	player3 := Player()
 
 	healingAmount := 10
 	startingHealth := player2.health
+	player3.dealDamage(player2, 100)
 	player1.heal(player2, healingAmount)
 
-	if player2.health != startingHealth+healingAmount {
-		t.Errorf("Expected the player to be healed by %d", healingAmount)
+	expectedHealth := startingHealth-100+healingAmount
+
+	if player2.health != expectedHealth {
+		t.Errorf("Expected the player to be healed by %d. Their expected health: %d, actual health: %d", healingAmount, expectedHealth, player2.health)
 	}
 }
 
 func TestPlayerCanOnlyBeHealedUpToMaximumHealth(t *testing.T) {
 	player1, player2, _ := testSetup2PlayersInTheSameFaction()
+	player3 := Player()
 
-	healingAmount := 1000
 	startingHealth := player2.health
-	player1.heal(player2, healingAmount)
+	player3.dealDamage(player2, 100)
+	player1.heal(player2, 1000)
 
 	if player2.health != startingHealth {
 		t.Errorf("Expected the player to be healed up to their maximum health %d but was %d", startingHealth, player2.health)
