@@ -324,3 +324,15 @@ func TestAPlayerCanHealWithAMagicObject(t *testing.T) {
 		}
 	}
 }
+
+func TestDestroyedHealingMagicalObject(t *testing.T) {
+	player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
+
+	player2.dealDamage(player1, 100)
+	healingMagicalObject := HealingMagicalObject(100)
+	player1.healWithMagicalObject(healingMagicalObject, 100)
+
+	if healingMagicalObject.isDestroyed() != true {
+		t.Error("Expected healing magical object to be destroyed")
+	}
+}

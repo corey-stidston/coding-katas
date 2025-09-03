@@ -38,20 +38,6 @@ func HealingMagicalObject(health int) *healingMagicalObject {
 	}
 }
 
-func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount int) {
-	if amount > hmo.health {
-		amount = hmo.health
-	}
-
-	healthDifference := player.getMaxHealth() - player.health
-	if amount > healthDifference {
-		amount = healthDifference
-	}
-	
-	player.health += amount
-	hmo.health -= amount
-}
-
 func (player *player) dealDamage(target *player, amount int) error {
 	if player == target {
 		return ErrPlayersCannotDealDamageToThemselves
@@ -142,6 +128,24 @@ func (faction *faction) getMembers() []*player {
 		members = append(members, mem)
 	}
 	return members
+}
+
+func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount int) {
+	if amount > hmo.health {
+		amount = hmo.health
+	}
+
+	healthDifference := player.getMaxHealth() - player.health
+	if amount > healthDifference {
+		amount = healthDifference
+	}
+
+	player.health += amount
+	hmo.health -= amount
+}
+
+func (h *healingMagicalObject) isDestroyed() bool {
+	panic("unimplemented")
 }
 
 var ErrPlayersCannotDamageAllies = errors.New("players cannot deal damage to allies")
