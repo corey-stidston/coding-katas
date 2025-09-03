@@ -273,26 +273,54 @@ func TestAPlayerCannotJoinFactionMultipleTimes(t *testing.T) {
 }
 
 func TestAPlayerCanHealWithAMagicObject(t *testing.T) {
-	player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
-	const (
-		startingMagicalObjectHealth = 100
-		damage                      = 90
-		healingAmount               = 10
-	)
-	startingHealth := player1.health
 
-	player2.dealDamage(player1, damage)
-	healingMagicalObject := HealingMagicalObject(startingMagicalObjectHealth)
-	player1.healWithMagicalObject(healingMagicalObject, healingAmount)
-
-	expectedHealth := startingHealth - damage + healingAmount
-	expectedMagicalObjectHealth := startingMagicalObjectHealth - healingAmount
-
-	if player1.health != expectedHealth {
-		t.Errorf("Expected health of the player to be %d, but was %d", expectedHealth, player1.health)
+	tests := []struct {
+		name                        string
+		damage                      int
+		healingAmount               int
+		expectedHealth              int
+		healingMagicalObjectHealth  int
+		expectedMagicalObjectHealth int
+	}{
+		{
+			name:                        "Heal with magical object",
+			damage:                      100,
+			healingAmount:               30,
+			expectedHealth:              930,
+			healingMagicalObjectHealth:  1000,
+			expectedMagicalObjectHealth: 970,
+		},
+		{
+			name:                        "Heal with magical object up to its object health",
+			damage:                      100,
+			healingAmount:               30,
+			expectedHealth:              915,
+			healingMagicalObjectHealth:  15,
+			expectedMagicalObjectHealth: 0,
+		},
+		{
+			name:                        "Heal with magical object up to player maximum health",
+			damage:                      100,
+			healingAmount:               100,
+			expectedHealth:              1000,
+			healingMagicalObjectHealth:  5000,
+			expectedMagicalObjectHealth: 4900,
+		},
 	}
 
-	if healingMagicalObject.health != expectedMagicalObjectHealth {
-		t.Errorf("Expected the healing magical object to have a health of %d, but was %d", expectedMagicalObjectHealth, healingMagicalObject.health)
+	for _, test := range tests {
+		player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
+
+		player2.dealDamage(player1, test.damage)
+		healingMagicalObject := HealingMagicalObject(test.healingMagicalObjectHealth)
+		player1.healWithMagicalObject(healingMagicalObject, test.healingAmount)
+
+		if player1.health != test.expectedHealth {
+			t.Errorf("Test failed (%s). Expected health of the player to be %d, but was %d", test.name, test.expectedHealth, player1.health)
+		}
+
+		if healingMagicalObject.health != test.expectedMagicalObjectHealth {
+			t.Errorf("Test failed (%s). Expected the healing magical object to have a health of %d, but was %d", test.name, test.expectedMagicalObjectHealth, healingMagicalObject.health)
+		}
 	}
 }

@@ -39,6 +39,15 @@ func HealingMagicalObject(health int) *healingMagicalObject {
 }
 
 func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount int) {
+	if amount > hmo.health {
+		amount = hmo.health
+	}
+
+	healthDifference := player.getMaxHealth() - player.health
+	if amount > healthDifference {
+		amount = healthDifference
+	}
+	
 	player.health += amount
 	hmo.health -= amount
 }
