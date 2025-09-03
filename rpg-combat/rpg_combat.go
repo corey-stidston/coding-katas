@@ -130,7 +130,11 @@ func (faction *faction) getMembers() []*player {
 	return members
 }
 
-func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount int) {
+func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount int) error {
+	if hmo.isDestroyed() {
+		return ErrCannotHealWithDestroyedObject
+	}
+
 	if amount > hmo.health {
 		amount = hmo.health
 	}
@@ -142,6 +146,8 @@ func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount in
 
 	player.health += amount
 	hmo.health -= amount
+
+	return nil
 }
 
 func (hmo *healingMagicalObject) isDestroyed() bool {
@@ -153,6 +159,7 @@ var ErrPlayersCannotDealDamageToThemselves = errors.New("players cannot deal dam
 var ErrDeadPlayersCannotBeDamaged = errors.New("dead players cannot be damaged")
 var ErrPlayersCannotHealThemselves = errors.New("players cannot heal themselves")
 var ErrPlayersCanOnlyHealAllies = errors.New("players can only heal allies")
+var ErrCannotHealWithDestroyedObject = errors.New("cannot heal with destroyed magical objects")
 
 func main() {
 	//

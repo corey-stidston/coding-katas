@@ -335,4 +335,10 @@ func TestDestroyedHealingMagicalObject(t *testing.T) {
 	if healingMagicalObject.isDestroyed() != true {
 		t.Error("Expected healing magical object to be destroyed")
 	}
+
+	err := player1.healWithMagicalObject(healingMagicalObject, 100)
+
+	if !errors.Is(err, ErrCannotHealWithDestroyedObject) {
+		t.Error("Expected error thrown when player heals with a destroyed object")
+	}
 }
