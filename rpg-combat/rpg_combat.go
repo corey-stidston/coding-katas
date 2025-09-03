@@ -144,8 +144,8 @@ func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount in
 	hmo.health -= amount
 }
 
-func (h *healingMagicalObject) isDestroyed() bool {
-	panic("unimplemented")
+func (hmo *healingMagicalObject) isDestroyed() bool {
+	return hmo.health <= 0
 }
 
 var ErrPlayersCannotDamageAllies = errors.New("players cannot deal damage to allies")
