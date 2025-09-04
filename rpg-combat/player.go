@@ -119,7 +119,11 @@ func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount in
 }
 
 func (player *player) dealDamageWithWeapon(target *player, weapon *magicalWeapon) error {
-	err := player.dealDamage(target, weapon.hitPoints)
+	if weapon.isDestroyed() {
+		return ErrCannotDealDamageWithDestroyedObject
+	}
+
+	err := player.dealDamage(target, weapon.damagePoints)
 
 	if err != nil {
 		return err

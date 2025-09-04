@@ -5,8 +5,8 @@ type healingMagicalObject struct {
 }
 
 type magicalWeapon struct {
-	health int
-	hitPoints int
+	health       int
+	damagePoints int
 }
 
 func HealingMagicalObject(health int) *healingMagicalObject {
@@ -16,12 +16,20 @@ func HealingMagicalObject(health int) *healingMagicalObject {
 }
 
 func (hmo *healingMagicalObject) isDestroyed() bool {
-	return hmo.health <= 0
+	return isDestroyed(hmo.health)
 }
 
-func MagicalWeapon(health int, hitPoints int) *magicalWeapon {
+func MagicalWeapon(health int, damagePoints int) *magicalWeapon {
 	return &magicalWeapon{
-		health: health,
-		hitPoints: hitPoints,
+		health:       health,
+		damagePoints: damagePoints,
 	}
+}
+
+func (weapon *magicalWeapon) isDestroyed() bool {
+	return isDestroyed(weapon.health)
+}
+
+func isDestroyed(health int) bool {
+	return health <= 0
 }
