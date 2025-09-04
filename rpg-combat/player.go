@@ -119,5 +119,11 @@ func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount in
 }
 
 func (player *player) dealDamageWithWeapon(target *player, wep *magicalWeapon) error {
+	err := player.dealDamage(target, wep.hitPoints)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
