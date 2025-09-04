@@ -338,7 +338,7 @@ func TestDestroyedHealingMagicalObject(t *testing.T) {
 
 	err := player1.healWithMagicalObject(healingMagicalObject, 100)
 
-	if !errors.Is(err, ErrCannotHealWithDestroyedObject) {
+	if !errors.Is(err, ErrorCannotUseDestroyedMagicalObject) {
 		t.Error("Expected error thrown when player heals with a destroyed object")
 	}
 }
@@ -351,7 +351,7 @@ func TestDealDamageWithMagicalWeapon(t *testing.T) {
 	expectedHealth := playerStartingHealth - damagePoints
 	weaponHealth := 10
 	expectedWeaponHealth := 9
-	
+
 	weapon := MagicalWeapon(weaponHealth, damagePoints)
 	player1.dealDamageWithWeapon(player2, weapon)
 
@@ -366,12 +366,12 @@ func TestDealDamageWithMagicalWeapon(t *testing.T) {
 
 func TestWeaponDestroyed(t *testing.T) {
 	player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
-	
+
 	weapon := MagicalWeapon(1, 10)
 	player1.dealDamageWithWeapon(player2, weapon)
 	err := player1.dealDamageWithWeapon(player2, weapon)
 
-	if !errors.Is(err, ErrCannotDealDamageWithDestroyedObject) {
+	if !errors.Is(err, ErrorCannotUseDestroyedMagicalObject) {
 		t.Errorf("Expected error to be thrown when using destroyed object")
 	}
 }

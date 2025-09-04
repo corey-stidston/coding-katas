@@ -100,7 +100,7 @@ func (player *player) isAnAllyTo(target *player) bool {
 
 func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount int) error {
 	if hmo.isDestroyed() {
-		return ErrCannotHealWithDestroyedObject
+		return ErrorCannotUseDestroyedMagicalObject
 	}
 
 	if amount > hmo.health {
@@ -120,7 +120,7 @@ func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount in
 
 func (player *player) dealDamageWithWeapon(target *player, weapon *magicalWeapon) error {
 	if weapon.isDestroyed() {
-		return ErrCannotDealDamageWithDestroyedObject
+		return ErrorCannotUseDestroyedMagicalObject
 	}
 
 	err := player.dealDamage(target, weapon.damagePoints)
