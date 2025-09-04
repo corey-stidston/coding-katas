@@ -349,11 +349,17 @@ func TestDealDamageWithMagicalWeapon(t *testing.T) {
 	damage := 10
 	playerStartingHealth := player2.health
 	expectedHealth := playerStartingHealth - damage
+	weaponHealth := 10
+	expectedWeaponHealth := 9
 	
-	weapon := MagicalWeapon(10, damage)
+	weapon := MagicalWeapon(weaponHealth, damage)
 	player1.dealDamageWithWeapon(player2, weapon)
 
 	if player2.health != expectedHealth {
 		t.Errorf("Expected player health to be %d, but was %d", expectedHealth, player2.health)
+	}
+
+	if weapon.health != 9 {
+		t.Errorf("Expected weapon health to be %d, but was %d", expectedWeaponHealth, weapon.health)
 	}
 }
