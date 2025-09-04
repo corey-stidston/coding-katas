@@ -342,3 +342,18 @@ func TestDestroyedHealingMagicalObject(t *testing.T) {
 		t.Error("Expected error thrown when player heals with a destroyed object")
 	}
 }
+
+func TestDealDamageWithMagicalWeapon(t *testing.T) {
+	player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
+
+	damage := 10
+	playerStartingHealth := player2.health
+	expectedHealth := playerStartingHealth - damage
+	
+	weapon := MagicalWeapon(10, damage)
+	player1.dealDamageWithWeapon(player2, weapon)
+
+	if player2.health != expectedHealth {
+		t.Errorf("Expected player health to be %d, but was %d", expectedHealth, player2.health)
+	}
+}

@@ -117,3 +117,7 @@ func (player *player) healWithMagicalObject(hmo *healingMagicalObject, amount in
 
 	return nil
 }
+
+func (player *player) dealDamageWithWeapon(target *player, wep *magicalWeapon) error {
+	return nil
+}
