@@ -1,9 +1,10 @@
 package main
 
 type player struct {
-	health   int
-	level    int
-	factions map[*faction]playerFactionLink
+	health         int
+	level          int
+	factions       map[*faction]playerFactionLink
+	totalDamageReceived int
 }
 
 func Player() *player {
@@ -11,6 +12,7 @@ func Player() *player {
 		health:   1000,
 		level:    1,
 		factions: make(map[*faction]playerFactionLink),
+		totalDamageReceived: 0,
 	}
 }
 
@@ -31,12 +33,36 @@ func (player *player) dealDamage(target *player, amount int) error {
 		amount = amount + amount/2
 	}
 
-	if amount > target.health {
-		target.health = 0 // player health cannot be less than zero
-	} else {
-		target.health -= amount
-	}
+	target.receiveDamage(amount)
+
 	return nil
+}
+
+func (player *player) receiveDamage(amount int) {
+	if amount > player.health {
+		amount = player.health // player cannot receive more damage than their health
+	}
+
+	player.health -= amount
+	player.totalDamageReceived += amount
+
+	if player.health > 0 {
+		if player.totalDamageReceived >= playerLevelTotalDamageReceivedMap[player.level + 1] {
+			player.level++
+		}
+	}
+}
+
+var playerLevelTotalDamageReceivedMap = map[int]int{
+	2: 1000,
+	3: 3000,
+	4: 6000,
+	5: 10000,
+	6: 15000,
+	7: 21000,
+	8: 28000,
+	9: 36000,
+	10: 45000,
 }
 
 func (player *player) heal(target *player, amount int) error {

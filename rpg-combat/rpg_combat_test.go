@@ -375,3 +375,48 @@ func TestWeaponDestroyed(t *testing.T) {
 		t.Errorf("Expected error to be thrown when using destroyed object")
 	}
 }
+
+func TestPlayersLevelUpAfterReceivingDamage(t *testing.T) {
+	tests := []struct {
+		name                string
+		totalDamageReceived int
+		expectedLevel       int
+	}{
+		{
+			name:                "Receive 1000 damage to reach level 2",
+			totalDamageReceived: 1000,
+			expectedLevel:       2,
+		},
+		{
+			name:                "Receive 3000 total damage to reach level 3",
+			totalDamageReceived: 3000,
+			expectedLevel:       3,
+		},
+		{
+			name:                "Receive 15000 total damage to reach level 6",
+			totalDamageReceived: 15000,
+			expectedLevel:       6,
+		},
+		{
+			name:                "Receive 45000 total damage to reach level 10",
+			totalDamageReceived: 45000,
+			expectedLevel:       10,
+		},
+	}
+
+	for _, test := range tests {
+		player1, player2, _, _ := testSetup2PlayersInSeparateFactions()
+
+		magicalObject := HealingMagicalObject(1000000)
+
+		for player2.totalDamageReceived < test.totalDamageReceived {
+			damage := 500
+			player1.dealDamage(player2, damage)
+			player2.healWithMagicalObject(magicalObject, damage)
+		}
+
+		if player2.level != test.expectedLevel {
+			t.Errorf("Expected player level to be %d, but was %d", test.expectedLevel, player2.level)
+		}
+	}
+}
